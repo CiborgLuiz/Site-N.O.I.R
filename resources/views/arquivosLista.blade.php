@@ -9,10 +9,8 @@
 </head>
 <body>
 
-    <!-- FUNDO INTERATIVO -->
     <canvas id="noir-bg"></canvas>
 
-    <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">N.O.I.R</div>
@@ -28,7 +26,6 @@
         </div>
     </header>
 
-    <!-- HERO -->
     <section class="hero hero-small">
         <h1>ARQUIVOS</h1>
         <p class="hero-subtitle">
@@ -40,7 +37,6 @@
         </p>
     </section>
 
-    <!-- LISTA DE ARQUIVOS -->
     <section class="section section-dark">
 
         <div class="archive-grid">
@@ -75,7 +71,6 @@
 
     </section>
 
-    <!-- RODAPÉ -->
     <footer class="footer">
         <p>© N.O.I.R — Arquivos Internos</p>
         <p class="version">classificação: sigilo máximo</p>
