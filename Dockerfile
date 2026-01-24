@@ -23,7 +23,14 @@ COPY . .
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Criar env temporário para o build
+RUN cp .env.example .env
+
 RUN composer install --no-dev --optimize-autoloader
+
+# Gerar chave
+RUN php artisan key:generate
 
 # Permissões
 RUN chown -R www-data:www-data storage bootstrap/cache
