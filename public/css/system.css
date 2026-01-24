@@ -135,3 +135,27 @@
     50% { opacity: 1; }
     100% { opacity: 0.92; }
 }
+
+
+.window-body {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* TXT */
+.txt-viewer {
+    color: #000000;
+    font-family: Consolas, monospace;
+    white-space: pre-wrap;
+    font-size: 14px;
+}
+
+/* IMAGEM */
+.img-viewer {
+    max-width: 100%;
+}
+
+/* AUDIO */
+.audio-player {
+    width: 100%;
+}
