@@ -1,0 +1,137 @@
+/* SISTEMA */
+.system-wrapper {
+    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+/* MONITOR */
+.monitor-frame {
+    width: 80vw;
+    height: 70vh;
+    background: #000;
+    border: 14px solid #1a1a1a;
+    border-radius: 12px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,.9),
+                0 40px 80px rgba(0,0,0,.8);
+    position: relative;
+    overflow: hidden;
+}
+
+/* BOOT */
+.boot-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: #00ff88;
+    font-family: "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* DESKTOP */
+.desktop {
+    width: 100%;
+    height: 100%;
+    background: url("/images/windows-xp-wallpaper.jpg") center/cover no-repeat;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 90px);
+    gap: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ÍCONES */
+.desktop-icon {
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+}
+
+.desktop-icon img {
+    width: 48px;
+}
+
+/* JANELA */
+.window {
+    position: absolute;
+    top: 80px;
+    left: 120px;
+    width: 480px;
+    background: #e4e4e4;
+    border: 2px solid #444;
+    box-shadow: 4px 4px 0 #000;
+    font-family: Tahoma, sans-serif;
+    z-index: 10;
+}
+
+.window-header {
+    background: linear-gradient(#2b579a, #1b3f7a);
+    color: #fff;
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.window-content {
+    padding: 10px;
+    background: #f0f0f0;
+}
+
+.window-body{
+    color: black;
+}
+
+/* ARQUIVOS */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    gap: 15px;
+}
+
+.file-icon {
+    text-align: center;
+    font-size: 13px;
+}
+
+
+.monitor-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.03)
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.04) 1px,
+            transparent 2px,
+            transparent 4px
+        );
+
+    animation:
+        scanlines 6s linear infinite,
+        flicker 0.15s infinite;
+}
+
+@keyframes scanlines {
+    from { background-position: 0 0; }
+    to   { background-position: 0 100%; }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.9; }
+    50% { opacity: 1; }
+    100% { opacity: 0.92; }
+}

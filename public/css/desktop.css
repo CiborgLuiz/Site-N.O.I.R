@@ -1,0 +1,73 @@
+body {
+    background: #008080;
+    font-family: Tahoma, sans-serif;
+}
+
+#desktop {
+    width: 900px;
+    height: 550px;
+    background: url('/img/xp-wallpaper.jpg') center/cover;
+    margin: auto;
+    position: relative;
+    border: 12px solid #333;
+    box-shadow: inset 0 0 20px #000;
+}
+
+.folder-icon {
+    width: 80px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.window {
+    width: 400px;
+    background: #f1f1f1;
+    border: 2px solid #000;
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,.5);
+}
+
+.window-header {
+    background: linear-gradient(#0058a3, #003f7f);
+    color: white;
+    padding: 6px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+}
+
+.window-body {
+    padding: 10px;
+    color: #000;
+}
+
+.file {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+/* CRT animado */
+.crt {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,.05),
+        rgba(0,0,0,.05) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: .25; }
+    50% { opacity: .35; }
+    100% { opacity: .25; }
+}

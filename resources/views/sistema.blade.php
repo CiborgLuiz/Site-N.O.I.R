@@ -2,104 +2,184 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>N.O.I.R - Acesso ao Sistema</title>
+    <title>N.O.I.R — Sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- CSS base (HOME + SISTEMA) -->
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/system.css') }}">
 </head>
 <body>
 
-    <canvas id="noir-bg"></canvas>
+<!-- FUNDO INTERATIVO -->
+<canvas id="noir-bg"></canvas>
 
-    <header class="navbar">
-        <div class="nav-container">
-            <div class="logo">N.O.I.R</div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="home">Início</a></li>
-                    <li><a href="organizacao">A Organização</a></li>
-                    <li><a href="protocolos">Protocolos</a></li>
-                    <li><a href="arquivos">Arquivos</a></li>
-                    <li><a href="sistema" class="nav-accent">Acessar Sistema</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<!-- NAVBAR (IGUAL HOME) -->
+<header class="navbar">
+    <div class="nav-container">
+        <div class="logo">N.O.I.R</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/home">Início</a></li>
+                <li><a href="/organizacao">A Organização</a></li>
+                <li><a href="/protocolos">Protocolos</a></li>
+                <li><a href="/arquivos">Arquivos</a></li>
+                <li><a href="/sistema" class="nav-accent">Sistema</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-    <section class="hero">
-        <h1>ACESSO AO SISTEMA</h1>
-        <p class="hero-subtitle">
-            AUTENTICAÇÃO • AUTORIZAÇÃO • RASTREAMENTO
-        </p>
-        <div class="divider"></div>
-        <p class="hero-description">
-            Toda tentativa de acesso é registrada.
-        </p>
-    </section>
+<!-- ÁREA DO SISTEMA -->
+<section class="system-wrapper">
 
-    <section class="section">
-        <div class="two-columns">
-            <div>
-                <h2>Terminal de Autenticação</h2>
-                <p>
-                    Este sistema é restrito a agentes autorizados da N.O.I.R.
-                    Tentativas indevidas resultarão em monitoramento ativo.
-                </p>
-                <p>
-                    Caso você não possua credenciais, encerre a sessão imediatamente.
-                </p>
-            </div>
+    <!-- MOLDURA DO MONITOR -->
+    <div class="monitor-frame">
 
-            <div class="status-box">
-                <p><strong>SISTEMA:</strong> ONLINE</p>
-                <p><strong>CRIPTOGRAFIA:</strong> ATIVA</p>
-                <p><strong>RASTREAMENTO:</strong> HABILITADO</p>
+        <!-- BOOT SCREEN -->
+        <div id="boot-screen" class="boot-screen">
+            <div class="boot-text">
+                <p>Iniciando N.O.I.R OS...</p>
+                <p>Verificando integridade do núcleo</p>
+                <p>Carregando módulos temporais</p>
             </div>
         </div>
-    </section>
 
-    <section class="section section-dark">
-        <h2>Credenciais</h2>
+        <!-- DESKTOP -->
+        <div id="desktop" class="desktop hidden">
 
-        <form class="status-box" method="POST" action="#">
+            <!-- ÍCONES DE PASTAS (BANCO DE DADOS) -->
+            @foreach($folders as $folder)
+                <div class="desktop-icon" onclick="openFolder({{ $folder->id }})">
+                    <img src="{{ asset('images/folder.png') }}" alt="Pasta">
+                    <span>{{ $folder->name }}</span>
+                </div>
+            @endforeach
 
-            <p>
-                <label for="agent">Identificação do Agente</label><br>
-                <input type="text" id="agent" name="agent" placeholder="AGT-███"
-                       style="width:100%; padding:0.5rem; margin-top:0.3rem;
-                       background:#0a0a0a; border:1px solid #2a2a2a; color:#fff;">
-            </p>
+            <!-- JANELAS ABERTAS -->
+            <div id="windows"></div>
 
-            <p style="margin-top:1rem;">
-                <label for="key">Chave de Acesso</label><br>
-                <input type="password" id="key" name="key" placeholder="••••••••"
-                       style="width:100%; padding:0.5rem; margin-top:0.3rem;
-                       background:#0a0a0a; border:1px solid #2a2a2a; color:#fff;">
-            </p>
+        </div>
 
-            <button class="btn" type="submit" style="margin-top:1.5rem;">
-                Iniciar Sessão
-            </button>
-        </form>
-    </section>
+    </div>
 
-    <section class="section section-warning">
-        <h2>Aviso</h2>
-        <p>
-            Ao prosseguir, você concorda com o monitoramento completo
-            de suas ações, decisões e impacto na linha temporal.
-        </p>
-        <p>
-            A N.O.I.R observa.
-        </p>
-    </section>
+</section>
 
-    <footer class="footer">
-        <p>© N.O.I.R — Todos os direitos reservados</p>
-        <p>Este sistema opera sob protocolos de sigilo</p>
-        <p class="version">v0.1-pre-collapse</p>
-    </footer>
+<!-- JS FUNDO -->
+<script src="{{ asset('js/noir-bg.js') }}"></script>
 
-    <script src="{{ asset('js/noir-bg.js') }}"></script>
+<!-- JS DO SISTEMA -->
+<script>
+/* =========================
+   BOOT DO SISTEMA
+========================= */
+setTimeout(() => {
+    const boot = document.getElementById('boot-screen');
+    const desktop = document.getElementById('desktop');
+
+    boot.style.display = 'none';
+    desktop.classList.remove('hidden');
+}, 3000);
+
+/* =========================
+   ABRIR PASTA
+========================= */
+function openFolder(folderId) {
+    fetch(`/sistema/pasta/${folderId}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('windows')
+                .insertAdjacentHTML('beforeend', html);
+
+            const windowEl = document.getElementById(`folder-${folderId}`);
+            makeDraggable(windowEl);
+        });
+}
+
+/* =========================
+   FECHAR JANELA
+========================= */
+function closeWindow(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+/* =========================
+   ABRIR ARQUIVO
+========================= */
+function openFile(type, content, name = 'Arquivo') {
+    const win = document.createElement('div');
+    win.className = 'window';
+    win.innerHTML = `
+        <div class="window-header">
+            ${name}
+            <button onclick="this.closest('.window').remove()">✖</button>
+        </div>
+        <div class="window-body">
+            ${renderFile(type, content)}
+        </div>
+    `;
+
+    document.getElementById('windows').appendChild(win);
+    makeDraggable(win);
+}
+
+/* =========================
+   RENDERIZAÇÃO POR TIPO
+========================= */
+function renderFile(type, content) {
+    switch(type) {
+        case 'txt':
+            return `<pre class="txt-viewer">${content}</pre>`;
+
+        case 'png':
+            return `<img src="${content}" class="img-viewer">`;
+
+        case 'mp3':
+            return `<audio controls src="${content}"></audio>`;
+
+        case 'mp4':
+            return `
+                <iframe 
+                    width="100%" 
+                    height="240" 
+                    src="${content}" 
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            `;
+        default:
+            return `<p>Formato não suportado</p>`;
+    }
+}
+
+/* =========================
+   JANELAS ARRASTÁVEIS
+========================= */
+function makeDraggable(windowEl) {
+    const header = windowEl.querySelector('.window-header');
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+
+    header.addEventListener('mousedown', e => {
+        isDragging = true;
+        offsetX = e.clientX - windowEl.offsetLeft;
+        offsetY = e.clientY - windowEl.offsetTop;
+        windowEl.style.zIndex = Date.now();
+    });
+
+    document.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        windowEl.style.left = (e.clientX - offsetX) + 'px';
+        windowEl.style.top = (e.clientY - offsetY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+}
+</script>
+
 </body>
 </html>
