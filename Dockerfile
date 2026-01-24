@@ -1,42 +1,76 @@
 FROM php:8.2-apache
 
-# Dependências do sistema
+# =========================
+# DEPENDÊNCIAS DO SISTEMA
+# =========================
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    zip \
+    curl \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
+    libicu-dev
+
+# =========================
+# EXTENSÕES PHP (CRÍTICO)
+# =========================
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
     zip \
-    curl
+    intl
 
-# Extensões PHP necessárias para o Laravel
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
-
-# Apache
+# =========================
+# APACHE
+# =========================
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html
-
-# Copiar projeto
-COPY . .
-
-# Composer
+# =========================
+# COMPOSER
+# =========================
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Criar env temporário para o build
+# =========================
+# APP
+# =========================
+WORKDIR /var/www/html
+COPY . .
+
+# ENV temporário para build
 RUN cp .env.example .env
 
-RUN composer install --no-dev --optimize-autoloader
+# =========================
+# COMPOSER INSTALL (SEM SCRIPTS PRIMEIRO)
+# =========================
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader \
+    --no-scripts
 
-# Gerar chave
+# =========================
+# LARAVEL
+# =========================
 RUN php artisan key:generate
 
-# Permissões
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
 
-# Apache aponta para /public
+# =========================
+# APACHE ROOT
+# =========================
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' \
     /etc/apache2/sites-available/000-default.conf
 
