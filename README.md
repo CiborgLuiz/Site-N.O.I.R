@@ -84,7 +84,7 @@ Mas agora que está… **a N.O.I.R está observando**.
 
 ## 🧬 Autor
 
-**Criado por:** Ciborg
+**Criado por:** CiborgLuiz
 **Projeto:** N.O.I.R SMP
 **Status:** Em desenvolvimento contínuo
 
@@ -95,6 +95,5 @@ Mas agora que está… **a N.O.I.R está observando**.
 Este projeto é de uso **criativo, narrativo e experimental**.
 A licença poderá ser ajustada conforme o uso futuro.
 
-```
 
 ---
