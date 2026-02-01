@@ -147,6 +147,6 @@
         <p class="version">v0.1-pre-collapse</p>
     </footer>
 
-    <script src="{{ asset('js/noir-bg.js') }}"></script>
+    @vite('resources/js/noir-bg.js')
 </body>
 </html>

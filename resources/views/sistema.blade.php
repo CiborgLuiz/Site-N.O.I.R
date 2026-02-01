@@ -2,12 +2,15 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>N.O.I.R — Sistema</title>
+    <title>N.O.I.R - Sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite('resources/css/home.css')
     @vite('resources/css/system.css')
 </head>
+<audio id="xp-sound" preload="auto">
+    <source src="{{ asset('sounds/windows-xp-startup.mp3') }}" type="audio/mpeg">
+</audio>
 <body>
 
 <canvas id="noir-bg"></canvas>
@@ -53,13 +56,33 @@
     </div>
 </section>
 
-<script src="{{ asset('js/noir-bg.js') }}"></script>
+    @vite('resources/js/noir-bg.js')
 
 <script>
 /* BOOT */
 setTimeout(() => {
-    document.getElementById('boot-screen').style.display = 'none';
-    document.getElementById('desktop').classList.remove('hidden');
+    const boot = document.getElementById('boot-screen');
+    const desktop = document.getElementById('desktop');
+    const sound = document.getElementById('xp-sound');
+
+    boot.style.display = 'none';
+    desktop.classList.remove('hidden');
+
+    // TOCAR SOM DO WINDOWS XP
+    if (sound) {
+        sound.volume = 0.6;
+        sound.muted = true;
+
+        const playPromise = sound.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                sound.muted = false;
+            }).catch(err => {
+                console.warn('Autoplay bloqueado:', err);
+            });
+        }
+    }
 }, 3000);
 
 /* ABRIR PASTA */

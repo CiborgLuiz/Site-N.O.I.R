@@ -75,6 +75,6 @@
         <p class="version">classificação: sigilo máximo</p>
     </footer>
 
-    <script src="{{ asset('js/noir-bg.js') }}"></script>
+    @vite('resources/js/noir-bg.js')
 </body>
 </html>

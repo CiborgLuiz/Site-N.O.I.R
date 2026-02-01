@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>N.O.I.R - Núcleo de Operações e Investigações de Rupturas</title>
+    <title>N.O.I.R - Pagina inicial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite('resources/css/home.css')
@@ -131,6 +131,6 @@
         <p class="version">v0.1-pre-collapse</p>
     </footer>
 
-    <script src="{{ asset('js/noir-bg.js') }}"></script>
+    @vite('resources/js/noir-bg.js')
 </body>
 </html>
