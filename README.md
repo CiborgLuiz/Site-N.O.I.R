@@ -1,4 +1,4 @@
-# 🕶️ N.O.I.R — Núcleo de Operações e Investigações de Rupturas
+# 👤 N.O.I.R — Núcleo de Operações e Investigações de Rupturas
 
 > **“A realidade não quebrou sozinha. Nós estamos observando.”**
 
