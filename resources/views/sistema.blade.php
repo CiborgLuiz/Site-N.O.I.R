@@ -5,8 +5,8 @@
     <title>N.O.I.R — Sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/system.css') }}">
+    @vite('resources/css/home.css')
+    @vite('resources/css/system.css')
 </head>
 <body>
 

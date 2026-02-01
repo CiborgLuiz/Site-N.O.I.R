@@ -5,7 +5,7 @@
     <title>N.O.I.R - Núcleo de Operações e Investigações de Rupturas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    @vite('resources/css/home.css')
 </head>
 <body>
 
