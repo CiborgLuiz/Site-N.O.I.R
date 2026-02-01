@@ -31,19 +31,6 @@ Inspirado por:
 - Protocolos e comunicados oficiais
 - Arquivos classificados protegidos por senha
 
-### 🗂️ Sistema de Arquivos (Simulação de SO)
-- Boot animado com som do Windows XP
-- Desktop interativo estilo CRT
-- Pastas carregadas via banco de dados
-- Arquivos internos dinâmicos
-- Janelas arrastáveis como um sistema operacional real
-
-### 📁 Tipos de Arquivos Suportados
-- `.txt` → Bloco de notas
-- `.png / .jpg` → Visualizador de imagem
-- `.mp3` → Reprodutor de áudio
-- `.mp4` → Player de vídeo (YouTube embed)
-
 ---
 
 ## 🛠️ Tecnologias Utilizadas
