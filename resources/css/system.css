@@ -88,7 +88,8 @@
 }
 
 .file-icon {
-    text-align: center;
+    padding-left: 20px;
+    padding-top: 5px;
     font-size: 13px;
 }
 
