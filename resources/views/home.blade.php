@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>N.O.I.R - Pagina inicial</title>
+    <title>N.O.I.R - Página Inicial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/home.css')
 </head>
 <body>
@@ -33,28 +33,39 @@
         </p>
         <div class="divider"></div>
         <p class="hero-description">
-            Monitorando eventos anômalos desde antes do colapso.
+            Fundada em 1947 após o Incidente do Pescador.
+            Operando nas sombras para preservar a continuidade da realidade.
         </p>
     </section>
 
     <section class="section">
         <div class="two-columns">
             <div>
-                <h2>Quem somos</h2>
+                <h2>Origem</h2>
                 <p>
-                    A N.O.I.R é uma organização independente criada para identificar,
-                    conter e investigar rupturas na realidade conhecidas e desconhecidas.
+                    A N.O.I.R foi idealizada por <strong>Phillip Müller</strong>,
+                    membro influente da elite política francesa, após um evento
+                    anômalo conhecido como <strong>“Caso do Pescador”</strong>
+                    ganhar repercussão internacional.
                 </p>
                 <p>
-                    Desde o evento classificado como <strong>[REDACTED]</strong>,
-                    operamos em sigilo absoluto.
+                    Convencido de que a humanidade não sobreviveria
+                    a novas rupturas da realidade,
+                    Müller investiu 15 bilhões para criar
+                    uma estrutura independente capaz de conter o desconhecido.
+                </p>
+                <p>
+                    Hoje, sob a liderança de <strong>Oliver Müller</strong>,
+                    a organização continua operando com o mesmo objetivo:
+                    preservar o que restou da humanidade.
                 </p>
             </div>
 
             <div class="status-box">
+                <p><strong>DIRETORIA ATUAL:</strong> OLIVER MÜLLER</p>
                 <p><strong>STATUS OPERACIONAL:</strong> ATIVO</p>
                 <p><strong>NÍVEL DE SIGILO:</strong> MÁXIMO</p>
-                <p><strong>LINHA TEMPORAL:</strong> INSTÁVEL</p>
+                <p><strong>INTEGRIDADE DA REALIDADE:</strong> INSTÁVEL</p>
             </div>
         </div>
     </section>
@@ -64,50 +75,65 @@
 
         <div class="cards">
             <div class="card">
-                <h3>Rupturas Detectadas</h3>
+                <h3>Rupturas Ativas</h3>
                 <p>NÍVEL: ELEVADO</p>
-                <p>STATUS: MONITORAMENTO</p>
-            </div>
-
-            <div class="card">
-                <h3>Integridade da Realidade</h3>
-                <p>ESTADO: COMPROMETIDO</p>
-            </div>
-
-            <div class="card">
-                <h3>Atividade Anômala</h3>
                 <p>TENDÊNCIA: CRESCENTE</p>
             </div>
 
             <div class="card">
-                <h3>Protocolos Ativos</h3>
-                <p>CLASSIFICAÇÃO: SIGILOSO</p>
+                <h3>Entidades Catalogadas</h3>
+                <p>TOTAL: CLASSIFICADO</p>
+                <p>CLASSE MÁXIMA: SETIS</p>
+            </div>
+
+            <div class="card">
+                <h3>Portais Dimensionais</h3>
+                <p>STATUS: EXPERIMENTAL</p>
+                <p>SUPERVISÃO: NOIR LABS</p>
+            </div>
+
+            <div class="card">
+                <h3>Protocolos Existenciais</h3>
+                <p>PRONTIDÃO: ATIVA</p>
+                <p>AUTORIZAÇÃO: DIRETORIA CENTRAL</p>
             </div>
         </div>
     </section>
 
     <section class="section">
-        <h2>Divisões da N.O.I.R</h2>
+        <h2>Estrutura Operacional</h2>
 
         <div class="cards">
             <div class="card">
-                <h3>Observação</h3>
-                <p>Monitoramento contínuo de eventos fora do padrão.</p>
+                <h3>N.O.I.R LABS</h3>
+                <p>
+                    Pesquisa científica avançada e estudo dimensional.
+                    Liderado por Florent Durand.
+                </p>
             </div>
 
             <div class="card">
-                <h3>Contenção</h3>
-                <p>Isolamento e neutralização de rupturas.</p>
+                <h3>N.O.I.R CONTAINMENT</h3>
+                <p>
+                    Operações de captura e isolamento de entidades.
+                    Liderado por Simon Bertrand.
+                </p>
             </div>
 
             <div class="card">
-                <h3>Arquivos Temporais</h3>
-                <p>Registro e análise de linhas do tempo instáveis.</p>
+                <h3>N.O.I.R SECURITY</h3>
+                <p>
+                    Controle de informação, silenciamento
+                    e proteção interna.
+                </p>
             </div>
 
             <div class="card">
-                <h3>Operações de Campo</h3>
-                <p>Agentes enviados para zonas afetadas.</p>
+                <h3>DIRETORIA CENTRAL</h3>
+                <p>
+                    Tomada de decisões estratégicas
+                    e ativação de protocolos irreversíveis.
+                </p>
             </div>
         </div>
     </section>
@@ -115,20 +141,23 @@
     <section class="section section-warning">
         <h2>Comunicado Oficial</h2>
         <p>
-            A população não está autorizada a interferir em eventos classificados.
-            Caso presencie fenômenos incomuns, <strong>não investigue</strong>.
+            Caso presencie fenômenos não identificados,
+            distorções espaciais, falhas temporais
+            ou entidades fora do padrão biológico conhecido,
+            <strong>não interaja</strong>.
         </p>
         <p>
-            A N.O.I.R está observando.
+            A contenção será realizada.
+            A memória pode ser ajustada.
         </p>
 
-        <a href="protocolos" class="btn">Ler Protocolos</a>
+        <a href="protocolos" class="btn">Acessar Protocolos Oficiais</a>
     </section>
 
     <footer class="footer">
-        <p>© N.O.I.R — Todos os direitos reservados</p>
-        <p>Este sistema opera sob protocolos de sigilo</p>
-        <p class="version">v0.1-pre-collapse</p>
+        <p>© N.O.I.R - Diretoria Central</p>
+        <p>Fundada por Phillip Müller - 1947</p>
+        <p class="version">v1.0-operational</p>
     </footer>
 
     @vite('resources/js/noir-bg.js')

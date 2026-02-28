@@ -1,11 +1,9 @@
-/* SISTEMA */
 .system-wrapper {
     padding-top: 120px;
     display: flex;
     justify-content: center;
 }
 
-/* MONITOR */
 .monitor-frame {
     width: 80vw;
     height: 70vh;
@@ -18,7 +16,6 @@
     overflow: hidden;
 }
 
-/* BOOT */
 .boot-screen {
     width: 100%;
     height: 100%;
@@ -30,7 +27,6 @@
     align-items: center;
 }
 
-/* DESKTOP */
 .desktop {
     width: 100%;
     height: 100%;
@@ -45,7 +41,6 @@
     display: none;
 }
 
-/* ÍCONES */
 .desktop-icon {
     text-align: center;
     cursor: pointer;
@@ -57,7 +52,6 @@
     width: 48px;
 }
 
-/* JANELA */
 .window {
     position: absolute;
     top: 80px;
@@ -87,7 +81,6 @@
     color: black;
 }
 
-/* ARQUIVOS */
 .folder-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 80px);
@@ -142,7 +135,6 @@
     color: #000000;
 }
 
-/* TXT */
 .txt-viewer {
     color: #000000;
     font-family: Consolas, monospace;
@@ -150,12 +142,10 @@
     font-size: 14px;
 }
 
-/* IMAGEM */
 .img-viewer {
     max-width: 100%;
 }
 
-/* AUDIO */
 .audio-player {
     width: 100%;
 }

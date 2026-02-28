@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>N.O.I.R - A Organização</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/home.css')
 </head>
 <body>
@@ -29,34 +29,121 @@
     <section class="hero">
         <h1>A ORGANIZAÇÃO</h1>
         <p class="hero-subtitle">
-            ESTRUTURA • ORIGEM • PROPÓSITO
+            FUNDAÇÃO • ESTRUTURA • CONTINUIDADE
         </p>
         <div class="divider"></div>
         <p class="hero-description">
-            Nem todos os mundos deveriam continuar existindo.
+            Criada para impedir o colapso da realidade.
+            Mantida para garantir que ela continue existindo.
         </p>
     </section>
 
     <section class="section">
         <div class="two-columns">
             <div>
-                <h2>Origem da N.O.I.R</h2>
+                <h2>Fundação</h2>
                 <p>
-                    A N.O.I.R surgiu após eventos que não puderam ser explicados,
-                    contidos ou apagados. Quando governos falharam e registros
-                    foram destruídos, uma iniciativa paralela nasceu.
+                    A N.O.I.R foi fundada em 1947 por <strong>Phillip Müller</strong>,
+                    após o evento conhecido como <strong>Incidente do Pescador</strong>
+                    expor publicamente uma ruptura na realidade.
+                </p>
+                <p>
+                    Percebendo que governos não possuíam estrutura,
+                    preparo ou discrição suficientes para lidar com
+                    ameaças além da compreensão humana,
+                    Müller utilizou sua influência política e 15 bilhões
+                    de sua fortuna pessoal para estabelecer
+                    uma organização autônoma e independente.
                 </p>
                 <p>
                     Oficialmente, a N.O.I.R não existe.
-                    Extraoficialmente, ela sempre esteve observando.
+                    Extraoficialmente, ela opera há décadas
+                    em todas as regiões do mundo.
                 </p>
             </div>
 
             <div class="status-box">
-                <p><strong>FUNDAÇÃO:</strong> [DADOS OCULTOS]</p>
-                <p><strong>AUTORIDADE:</strong> AUTÔNOMA</p>
-                <p><strong>EXISTÊNCIA:</strong> NÃO RECONHECIDA</p>
+                <p><strong>FUNDAÇÃO:</strong> 1947</p>
+                <p><strong>FUNDADOR:</strong> PHILLIP MÜLLER</p>
+                <p><strong>DIRETOR ATUAL:</strong> OLIVER MÜLLER</p>
+                <p><strong>STATUS:</strong> OPERACIONAL</p>
             </div>
+        </div>
+    </section>
+
+    <section class="section section-dark">
+        <h2>Liderança Atual</h2>
+
+        <div class="two-columns">
+            <div>
+                <p>
+                    Após a morte de Phillip Müller em 1976,
+                    a organização passou por um período de
+                    reestruturação interna.
+                </p>
+                <p>
+                    Anos depois, <strong>Oliver Müller</strong>,
+                    preparado desde a juventude para assumir
+                    a Diretoria Central, consolidou o comando
+                    aos 22 anos após provar sua capacidade
+                    em situações críticas de escalonamento máximo.
+                </p>
+                <p>
+                    Sob sua liderança, os protocolos foram
+                    modernizados e o nível de intervenção
+                    tornou-se mais direto.
+                </p>
+            </div>
+
+            <div class="status-box">
+                <p><strong>POLÍTICA ATUAL:</strong> CONTENÇÃO ATIVA</p>
+                <p><strong>PROTOCOLO EXISTENCIAL:</strong> PRONTO</p>
+                <p><strong>CLASSE MÁXIMA:</strong> SETIS</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Estrutura Operacional</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>DIRETORIA CENTRAL</h3>
+                <p>
+                    Responsável por decisões estratégicas globais,
+                    autorizações irreversíveis e ativação
+                    de protocolos existenciais.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>N.O.I.R LABS</h3>
+                <p>
+                    Liderado por Florent Durand.
+                    Pesquisa científica avançada,
+                    estudo dimensional e desenvolvimento
+                    do Projeto Portais.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>N.O.I.R CONTAINMENT</h3>
+                <p>
+                    Liderado por Simon Bertrand.
+                    Operações de campo, captura de entidades
+                    e contenção de alto risco.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>N.O.I.R SECURITY</h3>
+                <p>
+                    Contrainteligência, silenciamento,
+                    controle de informação e proteção interna.
+                </p>
+            </div>
+
         </div>
     </section>
 
@@ -66,69 +153,45 @@
         <div class="cards">
             <div class="card">
                 <h3>Identificar</h3>
-                <p>Detectar rupturas na realidade antes que se tornem irreversíveis.</p>
+                <p>Detectar rupturas antes que se tornem irreversíveis.</p>
             </div>
 
             <div class="card">
                 <h3>Conter</h3>
-                <p>Isolar eventos, entidades e zonas instáveis.</p>
+                <p>Isolar entidades e eventos classificados.</p>
             </div>
 
             <div class="card">
-                <h3>Investigar</h3>
-                <p>Compreender o que não deveria ser compreendido.</p>
+                <h3>Compreender</h3>
+                <p>Estudar o fenômeno sem permitir que ele nos estude.</p>
             </div>
 
             <div class="card">
-                <h3>Arquivar</h3>
-                <p>Registrar tudo. Mesmo o que nunca será lido.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>Estrutura Interna provocado</h2>
-
-        <div class="cards">
-            <div class="card">
-                <h3>Diretoria Central</h3>
-                <p>Decisões estratégicas e autorizações de alto risco.</p>
-            </div>
-
-            <div class="card">
-                <h3>Divisão de Operações</h3>
-                <p>Agentes de campo, contenção direta e evacuações.</p>
-            </div>
-
-            <div class="card">
-                <h3>Pesquisa & Anomalias</h3>
-                <p>Estudo de entidades, artefatos e fenômenos.</p>
-            </div>
-
-            <div class="card">
-                <h3>Arquivos Temporais</h3>
-                <p>Linhas do tempo alternativas e eventos apagados.</p>
+                <h3>Preservar</h3>
+                <p>Garantir a continuidade da realidade conhecida.</p>
             </div>
         </div>
     </section>
 
     <section class="section section-warning">
-        <h2>Aviso</h2>
+        <h2>Declaração Oficial</h2>
         <p>
-            Caso você esteja lendo este conteúdo sem autorização,
-            sua presença já foi registrada.
+            A existência da N.O.I.R não será reconhecida.
+            Eventos classificados serão negados,
+            distorcidos ou apagados.
         </p>
         <p>
-            A N.O.I.R não esquece.
+            Caso você tenha acessado este conteúdo sem autorização,
+            sua atividade já foi registrada.
         </p>
 
-        <a href="home" class="btn">Retornar ao Inicio</a>
+        <a href="home" class="btn">Retornar ao Início</a>
     </section>
 
     <footer class="footer">
-        <p>© N.O.I.R — Todos os direitos reservados</p>
-        <p>Este sistema opera sob protocolos de sigilo</p>
-        <p class="version">v0.1-pre-collapse</p>
+        <p>© N.O.I.R - Diretoria Central</p>
+        <p>Fundada por Phillip Müller - 1947</p>
+        <p class="version">v1.0-operational</p>
     </footer>
 
     @vite('resources/js/noir-bg.js')

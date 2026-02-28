@@ -5,6 +5,7 @@
     <title>N.O.I.R - Arquivos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/home.css')
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 </head>
 <body>
 
@@ -74,15 +75,16 @@
                    style="width:100%; margin-top:0.5rem; padding:0.5rem;
                    background:#0a0a0a; border:1px solid #2a2a2a; color:#fff;">
 
-            <button type="submit" class="btn" style="margin-top:1.5rem;">
+            <button type="submit" class="btn2" style="margin-top:1.5rem;">
                 Desbloquear
             </button>
         </form>
     </section>
 
     <footer class="footer">
-        <p>© N.O.I.R — Todos os direitos reservados</p>
-        <p class="version">v0.1-pre-collapse</p>
+        <p>© N.O.I.R - Diretoria Central</p>
+        <p>Fundada por Phillip Müller - 1947</p>
+        <p class="version">v1.0-operational</p>
     </footer>
 
     @vite('resources/js/noir-bg.js')

@@ -1,162 +1,212 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>N.O.I.R - Sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/home.css')
     @vite('resources/css/system.css')
 </head>
-<audio id="xp-sound" preload="auto">
-    <source src="{{ asset('sounds/windows-xp-startup.mp3') }}" type="audio/mpeg">
-</audio>
-<body>
 
-<canvas id="noir-bg"></canvas>
+<body class="system-page">
 
-<header class="navbar">
-    <div class="nav-container">
-        <div class="logo">N.O.I.R</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/home">Início</a></li>
-                <li><a href="/organizacao">A Organização</a></li>
-                <li><a href="/protocolos">Protocolos</a></li>
-                <li><a href="/arquivos">Arquivos</a></li>
-                <li><a href="/sistema" class="nav-accent">Sistema</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    <canvas id="noir-bg"></canvas>
 
-<section class="system-wrapper">
-    <div class="monitor-frame">
+    <audio id="xp-sound" preload="auto">
+        <source src="{{ asset('sounds/windows-xp-startup.mp3') }}" type="audio/mpeg">
+    </audio>
 
-        <div id="boot-screen" class="boot-screen">
-            <div class="boot-text">
-                <p>Iniciando N.O.I.R OS...</p>
-                <p>Verificando integridade do núcleo</p>
-                <p>Carregando módulos temporais</p>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">N.O.I.R</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="home">Início</a></li>
+                    <li><a href="organizacao">A Organização</a></li>
+                    <li><a href="protocolos">Protocolos</a></li>
+                    <li><a href="arquivos">Arquivos</a></li>
+                    <li><a href="sistema" class="nav-accent">Acessar Sistema</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="system-wrapper">
+        <div class="monitor-frame">
+            <div id="boot-screen" class="boot-screen">
+                <div class="boot-text" id="boot-text"></div>
             </div>
+            <div id="desktop" class="desktop hidden">
+
+                @foreach ($folders as $folder)
+                    <div class="desktop-icon" onclick="openFolder({{ $folder->id }})">
+                        <img src="{{ asset('images/folder.png') }}">
+                        <span>{{ $folder->name }}</span>
+                    </div>
+                @endforeach
+
+                <div id="windows"></div>
+            </div>
+
         </div>
-
-        <div id="desktop" class="desktop hidden">
-
-            @foreach($folders as $folder)
-                <div class="desktop-icon" onclick="openFolder({{ $folder->id }})">
-                    <img src="{{ asset('images/folder.png') }}">
-                    <span>{{ $folder->name }}</span>
-                </div>
-            @endforeach
-
-            <div id="windows"></div>
-        </div>
-
-    </div>
-</section>
+    </section>
 
     @vite('resources/js/noir-bg.js')
 
-<script>
-/* BOOT */
-setTimeout(() => {
-    const boot = document.getElementById('boot-screen');
-    const desktop = document.getElementById('desktop');
-    const sound = document.getElementById('xp-sound');
+    <script>
+        const bootLines = [
+            "Iniciando N.O.I.R OS...",
+            "Verificando integridade do núcleo...",
+            "Carregando módulos temporais...",
+            "Sincronizando registros anômalos...",
+            "Acesso autorizado."
+        ];
 
-    boot.style.display = 'none';
-    desktop.classList.remove('hidden');
+        const bootText = document.getElementById("boot-text");
+        const bootScreen = document.getElementById("boot-screen");
+        const desktop = document.getElementById("desktop");
+        const xpSound = document.getElementById("xp-sound");
 
-    // TOCAR SOM DO WINDOWS XP
-    if (sound) {
-        sound.volume = 0.6;
-        sound.muted = true;
+        let lineIndex = 0;
 
-        const playPromise = sound.play();
+        function typeLine(text, callback) {
+            let i = 0;
+            const p = document.createElement("p");
+            bootText.appendChild(p);
 
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                sound.muted = false;
+            const interval = setInterval(() => {
+                p.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    setTimeout(callback, 400);
+                }
+            }, 25);
+        }
+
+        function runBoot() {
+            if (lineIndex < bootLines.length) {
+                typeLine(bootLines[lineIndex], () => {
+                    lineIndex++;
+                    runBoot();
+                });
+            } else {
+                setTimeout(finishBoot, 800);
+            }
+        }
+
+        function finishBoot() {
+            bootScreen.style.opacity = "0";
+            setTimeout(() => {
+                bootScreen.style.display = "none";
+                desktop.classList.remove("hidden");
+                desktop.classList.add("fade-in");
+                playStartupSound();
+            }, 600);
+        }
+
+        function playStartupSound() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const ctx = new AudioContext();
+            const source = ctx.createMediaElementSource(xpSound);
+            const gain = ctx.createGain();
+
+            source.connect(gain);
+            gain.connect(ctx.destination);
+
+            gain.gain.value = 0;
+            xpSound.play().then(() => {
+                gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 1.5);
             }).catch(err => {
-                console.warn('Autoplay bloqueado:', err);
+                console.warn("Autoplay bloqueado:", err);
             });
         }
-    }
-}, 3000);
-
-/* ABRIR PASTA */
-function openFolder(folderId) {
-    fetch(`/sistema/pasta/${folderId}`)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById('windows').insertAdjacentHTML('beforeend', html);
-            enableDrag();
+        document.addEventListener("click", function unlock() {
+            runBoot();
+            document.removeEventListener("click", unlock);
         });
-}
 
-/* ABRIR ARQUIVO */
-function openFile(type, name, content, path) {
+        function openFolder(folderId) {
+            fetch(`/sistema/pasta/${folderId}`)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('windows')
+                        .insertAdjacentHTML('beforeend', html);
+                    enableDrag();
+                });
+        }
 
-    let body = '';
+        function openFile(type, name, content, path) {
 
-    if (type === 'txt') {
-        body = `<pre class="txt-viewer">${content}</pre>`;
-    }
+            let body = '';
 
-    if (type === 'png' || type === 'jpg') {
-        body = `<img src="${path}" class="img-viewer">`;
-    }
+            if (type === 'txt') {
+                body = `<pre class="txt-viewer">${content}</pre>`;
+            }
 
-    if (type === 'mp3') {
-        body = `<audio controls autoplay src="${path}"></audio>`;
-    }
+            if (type === 'png' || type === 'jpg') {
+                body = `<img src="${path}" class="img-viewer">`;
+            }
 
-    if (type === 'mp4') {
-        body = `
+            if (type === 'mp3') {
+                body = `<audio controls autoplay src="${path}"></audio>`;
+            }
+
+            if (type === 'mp4') {
+                body = `
             <iframe src="${content}" 
                 width="100%" height="260"
                 allowfullscreen></iframe>
         `;
-    }
+            }
 
-    const win = `
-        <div class="window draggable">
-            <div class="window-header">
-                <span>${name}</span>
-                <button onclick="this.closest('.window').remove()">✕</button>
-            </div>
-            <div class="window-body">${body}</div>
+            const win = document.createElement("div");
+            win.className = "window draggable fade-window";
+            win.style.top = "120px";
+            win.style.left = "120px";
+            win.innerHTML = `
+        <div class="window-header">
+            <span>${name}</span>
+            <button onclick="this.closest('.window').remove()">✕</button>
         </div>
+        <div class="window-body">${body}</div>
     `;
 
-    document.getElementById('windows').insertAdjacentHTML('beforeend', win);
-    enableDrag();
-}
+            document.getElementById('windows').appendChild(win);
+            enableDrag();
+        }
 
-/* DRAG WINDOWS */
-function enableDrag() {
-    document.querySelectorAll('.draggable').forEach(win => {
-        const header = win.querySelector('.window-header');
-        let offsetX = 0, offsetY = 0, dragging = false;
+        function enableDrag() {
+            document.querySelectorAll('.draggable').forEach(win => {
 
-        header.onmousedown = e => {
-            dragging = true;
-            offsetX = e.clientX - win.offsetLeft;
-            offsetY = e.clientY - win.offsetTop;
-            win.style.zIndex = Date.now();
-        };
+                const header = win.querySelector('.window-header');
+                let offsetX = 0;
+                let offsetY = 0;
+                let dragging = false;
 
-        document.onmousemove = e => {
-            if (!dragging) return;
-            win.style.left = (e.clientX - offsetX) + 'px';
-            win.style.top = (e.clientY - offsetY) + 'px';
-        };
+                header.addEventListener('mousedown', e => {
+                    dragging = true;
+                    offsetX = e.clientX - win.offsetLeft;
+                    offsetY = e.clientY - win.offsetTop;
+                    win.style.zIndex = Date.now();
+                });
 
-        document.onmouseup = () => dragging = false;
-    });
-}
-</script>
+                document.addEventListener('mousemove', e => {
+                    if (!dragging) return;
+                    win.style.left = (e.clientX - offsetX) + 'px';
+                    win.style.top = (e.clientY - offsetY) + 'px';
+                });
+
+                document.addEventListener('mouseup', () => {
+                    dragging = false;
+                });
+
+            });
+        }
+    </script>
 
 </body>
+
 </html>
