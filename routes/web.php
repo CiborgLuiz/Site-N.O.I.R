@@ -24,17 +24,12 @@ Route::get('/arquivos', function () {
 
 Route::post('/arquivos/unlock', [ArquivosController::class, 'unlock'])->name('arquivos.unlock');
 
-Route::get('/arquivos/lista', [ArquivosController::class, 'lista'])->name('arquivosLista');
-
-Route::get('/sistema', function () {
-    return view('sistema');
-});
-
 Route::get('/arquivos/lista', [ArchiveController::class, 'index'])->name('arquivosLista');
 
-Route::get('/sistema', [SystemController::class, 'index']);
+Route::get('/sistema', [DesktopController::class, 'index'])->name('sistema');
+
+Route::get('/sistema/terminal', function () {
+    return view('terminal');
+})->name('sistema.terminal');
 
 Route::get('/sistema/pasta/{id}', [SystemController::class, 'openFolder']);
-
-Route::get('/sistema', [DesktopController::class, 'index']);
-

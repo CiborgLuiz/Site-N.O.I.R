@@ -30,9 +30,7 @@
 
     <section class="hero hero-small">
         <h1>ARQUIVOS</h1>
-        <p class="hero-subtitle">
-            BASE DE DADOS CONFIDENCIAL
-        </p>
+        <p class="hero-subtitle">BASE DE DADOS CONFIDENCIAL</p>
         <div class="divider"></div>
         <p class="hero-description">
             Classificação ativa por nível de risco.
@@ -42,53 +40,51 @@
     <section class="section section-dark">
 
         @php
+            function normalizeSlug($text)
+            {
+                $text = strtolower($text);
+                $text = str_replace(['í'], ['i'], $text);
+                return $text;
+            }
+
             $order = [
                 'neutralizado' => 1,
                 'seguro' => 2,
                 'totin' => 3,
-                'ísop' => 4,
                 'isop' => 4,
                 'denus' => 5,
                 'setis' => 6,
             ];
 
             $sortedArchives = $archives->sortBy(function ($archive) use ($order) {
-                return $order[strtolower($archive->classification)] ?? 99;
+                $slug = normalizeSlug($archive->classification);
+                return $order[$slug] ?? 99;
             });
         @endphp
 
         <div class="archive-grid">
-
             @foreach ($sortedArchives as $archive)
                 @php
-                    $classSlug = strtolower($archive->classification);
+                    $classSlug = normalizeSlug($archive->classification);
                 @endphp
 
                 <div class="archive-card class-{{ $classSlug }}">
-
                     <div class="archive-image">
                         <img src="{{ asset($archive->image_path) }}" alt="{{ $archive->name }}">
                     </div>
 
                     <div class="archive-info">
                         <h3>{{ $archive->name }}</h3>
-
-                        <p class="archive-id">
-                            ID: {{ $archive->identifier }}
-                        </p>
-
+                        <p class="archive-id">ID: {{ $archive->identifier }}</p>
                         <span class="archive-classification">
                             {{ strtoupper($archive->classification) }}
                         </span>
-
                         <p class="archive-description">
                             {{ $archive->description }}
                         </p>
                     </div>
-
                 </div>
             @endforeach
-
         </div>
 
     </section>
@@ -99,130 +95,144 @@
         <p class="version">v1.0-operational</p>
     </footer>
 
-    <div id="setis-alert">
-        ⚠ NÍVEL DE RISCO MÁXIMO
-    </div>
+    <div id="setis-alert">⚠ NÍVEL DE RISCO MÁXIMO</div>
 
-    <audio id="setis-audio" preload="auto" loop>
-        <source src="{{ asset('sounds/interferencia.mp3') }}" type="audio/mpeg">
-    </audio>
+    <audio id="audio-neutralizado" src="{{ asset('sounds/neutralizado.mp3') }}" preload="auto" loop></audio>
+    <audio id="audio-seguro" src="{{ asset('sounds/seguro.mp3') }}" preload="auto" loop></audio>
+    <audio id="audio-totin" src="{{ asset('sounds/totin.mp3') }}" preload="auto" loop></audio>
+    <audio id="audio-isop" src="{{ asset('sounds/isop.mp3') }}" preload="auto" loop></audio>
+    <audio id="audio-denus" src="{{ asset('sounds/denus.mp3') }}" preload="auto" loop></audio>
+    <audio id="audio-setis" src="{{ asset('sounds/setis.mp3') }}" preload="auto" loop></audio>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            const setisCards = document.querySelectorAll(".class-setis");
-            const audioElement = document.getElementById("setis-audio");
+            let audioContext = new(window.AudioContext || window.webkitAudioContext)();
+            let activeNode = null;
+            let deactivateTimer = null;
 
-            let audioContext;
-            let sourceNode;
-            let gainNode;
-            let distortionNode;
-            let isInitialized = false;
+            const audioMap = {
+                neutralizado: "audio-neutralizado",
+                seguro: "audio-seguro",
+                totin: "audio-totin",
+                isop: "audio-isop",
+                denus: "audio-denus",
+                setis: "audio-setis"
+            };
 
-            function createDistortion(amount) {
-                const k = typeof amount === 'number' ? amount : 50;
-                const n_samples = 44100;
-                const curve = new Float32Array(n_samples);
-                const deg = Math.PI / 180;
+            const nodes = {};
 
-                for (let i = 0; i < n_samples; ++i) {
-                    const x = i * 2 / n_samples - 1;
-                    curve[i] = (3 + k) * x * 20 * deg / (Math.PI + k * Math.abs(x));
+            function setupAudio(type) {
+
+                if (nodes[type]) return nodes[type];
+
+                const audioEl = document.getElementById(audioMap[type]);
+                const source = audioContext.createMediaElementSource(audioEl);
+                const gain = audioContext.createGain();
+
+                gain.gain.value = 0;
+
+                source.connect(gain);
+                gain.connect(audioContext.destination);
+
+                nodes[type] = {
+                    audioEl,
+                    gain
+                };
+
+                return nodes[type];
+            }
+
+            function activate(type) {
+
+                if (!audioMap[type]) return;
+
+                if (activeNode) deactivate();
+
+                document.body.classList.remove(
+                    "neutralizado-active",
+                    "seguro-active",
+                    "totin-active",
+                    "isop-active",
+                    "denus-active",
+                    "setis-active"
+                );
+
+                document.body.classList.add(type + "-active");
+
+                const node = setupAudio(type);
+
+                if (deactivateTimer) {
+                    clearTimeout(deactivateTimer);
+                    deactivateTimer = null;
                 }
-                return curve;
+
+                node.gain.gain.cancelScheduledValues(audioContext.currentTime);
+                node.audioEl.playbackRate = 0.98 + Math.random() * 0.04;
+
+                node.gain.gain.setValueAtTime(0, audioContext.currentTime);
+                node.gain.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 1);
+
+                node.audioEl.play().catch(() => {});
+
+                activeNode = node;
             }
 
-            function initAudio() {
-                if (isInitialized) return;
+            function deactivate() {
 
-                audioContext = new(window.AudioContext || window.webkitAudioContext)();
+                if (!activeNode) return;
 
-                sourceNode = audioContext.createMediaElementSource(audioElement);
-                gainNode = audioContext.createGain();
-                distortionNode = audioContext.createWaveShaper();
+                const node = activeNode;
+                activeNode = null;
 
-                distortionNode.curve = createDistortion(Math.random() * 40 + 10);
-                distortionNode.oversample = '4x';
+                node.gain.gain.cancelScheduledValues(audioContext.currentTime);
+                node.gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
 
-                sourceNode.connect(distortionNode);
-                distortionNode.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                gainNode.gain.value = 0;
-
-                isInitialized = true;
-            }
-
-            function digitalClick() {
-                const clickOsc = audioContext.createOscillator();
-                const clickGain = audioContext.createGain();
-
-                clickOsc.type = "square";
-                clickOsc.frequency.value = 1200;
-
-                clickGain.gain.setValueAtTime(0.4, audioContext.currentTime);
-                clickGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
-
-                clickOsc.connect(clickGain);
-                clickGain.connect(audioContext.destination);
-
-                clickOsc.start();
-                clickOsc.stop(audioContext.currentTime + 0.05);
-            }
-
-            function startSetisAudio() {
-
-                initAudio();
-
-                digitalClick();
-
-                audioElement.playbackRate = 0.97 + (Math.random() * 0.06);
-
-                distortionNode.curve = createDistortion(Math.random() * 60 + 20);
-
-                audioElement.play().catch(() => {});
-
-                gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.18, audioContext.currentTime + 2);
-            }
-
-            function stopSetisAudio() {
-                if (!isInitialized) return;
-
-                gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
-
-                setTimeout(() => {
-                    audioElement.pause();
-                    audioElement.currentTime = 0;
+                if (deactivateTimer) {
+                    clearTimeout(deactivateTimer);
+                }
+                deactivateTimer = setTimeout(() => {
+                    node.audioEl.pause();
+                    node.audioEl.currentTime = 0;
                 }, 600);
+
+                document.body.classList.remove(
+                    "neutralizado-active",
+                    "seguro-active",
+                    "totin-active",
+                    "isop-active",
+                    "denus-active",
+                    "setis-active"
+                );
             }
 
-            document.addEventListener("click", function unlock() {
-                if (!isInitialized) {
-                    initAudio();
-                    audioContext.resume();
-                }
-                document.removeEventListener("click", unlock);
-            });
-
-            setisCards.forEach(card => {
+            document.querySelectorAll(".archive-card").forEach(card => {
 
                 card.addEventListener("mouseenter", () => {
-                    document.body.classList.add("setis-active");
-                    startSetisAudio();
+
+                    audioContext.resume();
+
+                    const className = Array.from(card.classList)
+                        .find(c => c.startsWith("class-"));
+
+                    if (!className) return;
+
+                    const type = className.replace("class-", "");
+
+                    activate(type);
                 });
 
-                card.addEventListener("mouseleave", () => {
-                    document.body.classList.remove("setis-active");
-                    stopSetisAudio();
-                });
+                card.addEventListener("mouseleave", deactivate);
 
+            });
+
+            window.addEventListener("load", () => {
+                audioContext.resume();
             });
 
         });
     </script>
+
     @vite('resources/js/noir-bg.js')
 
 </body>
