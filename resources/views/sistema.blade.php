@@ -10,7 +10,11 @@
     @vite('resources/css/system.css')
 </head>
 
-<body class="system-page">
+<body
+    class="system-page noir-loading"
+    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
+>
+    @include('partials.site-loader')
 
     <canvas id="noir-bg"></canvas>
 
@@ -38,7 +42,11 @@
             <div id="boot-screen" class="boot-screen">
                 <div class="boot-text" id="boot-text"></div>
             </div>
-            <div id="desktop" class="desktop hidden">
+            <div
+                id="desktop"
+                class="desktop hidden"
+                style="--system-wallpaper-image: url('{{ asset('images/windows-xp-wallpaper.jpg') }}');"
+            >
                 <a class="desktop-icon" href="{{ url('/sistema/terminal') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-terminal" viewBox="0 0 16 16">
@@ -67,6 +75,7 @@
         </div>
     </section>
 
+    @vite('resources/js/site.js')
     @vite('resources/js/noir-bg.js')
 
     <script>
@@ -84,6 +93,7 @@
         const xpSound = document.getElementById("xp-sound");
 
         let lineIndex = 0;
+        let bootStarted = false;
 
         function typeLine(text, callback) {
             let i = 0;
@@ -137,9 +147,25 @@
                 console.warn("Autoplay bloqueado:", err);
             });
         }
-        document.addEventListener("click", function unlock() {
+        function beginBoot() {
+            if (bootStarted || !document.body.classList.contains("noir-loaded")) {
+                return;
+            }
+
+            bootStarted = true;
             runBoot();
-            document.removeEventListener("click", unlock);
+        }
+
+        document.addEventListener("noir:loader-complete", beginBoot, {
+            once: true
+        });
+
+        document.addEventListener("click", function unlock() {
+            beginBoot();
+
+            if (bootStarted) {
+                document.removeEventListener("click", unlock);
+            }
         });
 
         function openFolder(folderId) {

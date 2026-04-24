@@ -7,7 +7,11 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/home.css')
 </head>
-<body>
+<body
+    class="noir-loading"
+    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
+>
+    @include('partials.site-loader')
 
     <canvas id="noir-bg"></canvas>
 
@@ -33,7 +37,7 @@
         </p>
         <div class="divider"></div>
         <p class="hero-description">
-            Fundada em 1947 após o Incidente do Pescador.
+            Fundada em 1947 após as primeiras aparições.
             Operando nas sombras para preservar a continuidade da realidade.
         </p>
     </section>
@@ -160,6 +164,7 @@
         <p class="version">v1.0-operational</p>
     </footer>
 
+    @vite('resources/js/site.js')
     @vite('resources/js/noir-bg.js')
 </body>
 </html>

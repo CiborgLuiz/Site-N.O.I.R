@@ -2,16 +2,21 @@
     padding-top: 120px;
     display: flex;
     justify-content: center;
+    padding-inline: 1.5rem;
 }
 
 .monitor-frame {
     width: 80vw;
     height: 70vh;
-    background: #000;
+    background:
+        radial-gradient(circle at top, rgba(141, 116, 130, 0.2), rgba(0, 0, 0, 0.94) 42%),
+        #000;
     border: 14px solid #1a1a1a;
     border-radius: 12px;
-    box-shadow: inset 0 0 40px rgba(0,0,0,.9),
-                0 40px 80px rgba(0,0,0,.8);
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,.9),
+        0 40px 80px rgba(0,0,0,.8),
+        0 0 0 1px rgba(209, 171, 121, 0.08);
     position: relative;
     overflow: hidden;
 }
@@ -25,12 +30,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.boot-screen::before,
+.boot-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.boot-screen::before {
+    background:
+        radial-gradient(circle at center, rgba(0, 255, 136, 0.08), transparent 40%),
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0 3px,
+            rgba(255, 255, 255, 0.03) 4px,
+            transparent 7px
+        );
+}
+
+.boot-screen::after {
+    background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.08), transparent);
+    animation: bootSweep 4.2s linear infinite;
+}
+
+.boot-text {
+    position: relative;
+    z-index: 1;
+    width: min(82%, 560px);
+    padding: 1.6rem;
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    background: rgba(2, 10, 5, 0.68);
+    box-shadow: 0 0 28px rgba(0, 255, 136, 0.08);
 }
 
 .desktop {
     width: 100%;
     height: 100%;
-    background: url("http://[::1]:5173/public/images/windows-xp-wallpaper.jpg") center/cover no-repeat;
+    background:
+        linear-gradient(rgba(7, 10, 20, 0.08), rgba(7, 10, 20, 0.08)),
+        var(--system-wallpaper-image) center/cover no-repeat;
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -58,6 +101,16 @@
     justify-content: flex-start;
     padding-top: 8px;
     user-select: none;
+    border-radius: 18px;
+    transition:
+        transform 0.28s ease,
+        background-color 0.28s ease,
+        box-shadow 0.28s ease;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
 }
 
 .desktop-icon img {
@@ -174,4 +227,84 @@
 
 .audio-player {
     width: 100%;
+}
+
+.desktop.fade-in {
+    animation: desktopFade 0.75s ease-out both;
+}
+
+.desktop.fade-in .desktop-icon {
+    opacity: 0;
+    animation: desktopIconRise 0.65s ease-out forwards;
+}
+
+.desktop.fade-in .desktop-icon:nth-child(1) { animation-delay: 0.08s; }
+.desktop.fade-in .desktop-icon:nth-child(2) { animation-delay: 0.16s; }
+.desktop.fade-in .desktop-icon:nth-child(3) { animation-delay: 0.24s; }
+.desktop.fade-in .desktop-icon:nth-child(4) { animation-delay: 0.32s; }
+.desktop.fade-in .desktop-icon:nth-child(5) { animation-delay: 0.4s; }
+.desktop.fade-in .desktop-icon:nth-child(6) { animation-delay: 0.48s; }
+.desktop.fade-in .desktop-icon:nth-child(7) { animation-delay: 0.56s; }
+.desktop.fade-in .desktop-icon:nth-child(8) { animation-delay: 0.64s; }
+
+@media (max-width: 900px) {
+    .system-wrapper {
+        padding-top: 160px;
+        padding-inline: 1rem;
+    }
+
+    .monitor-frame {
+        width: 100%;
+        height: 74svh;
+        border-width: 10px;
+    }
+}
+
+@media (max-width: 640px) {
+    .desktop {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 110px;
+        gap: 10px;
+        padding: 14px;
+    }
+
+    .window {
+        width: min(92vw, 420px);
+        left: 12px;
+        top: 70px;
+    }
+}
+
+@keyframes bootSweep {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes desktopFade {
+    from {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes desktopIconRise {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

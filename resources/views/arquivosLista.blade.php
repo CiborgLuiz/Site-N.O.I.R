@@ -9,7 +9,11 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 </head>
 
-<body>
+<body
+    class="noir-loading"
+    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
+>
+    @include('partials.site-loader')
 
     <canvas id="noir-bg"></canvas>
 
@@ -233,6 +237,7 @@
         });
     </script>
 
+    @vite('resources/js/site.js')
     @vite('resources/js/noir-bg.js')
 
 </body>
