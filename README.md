@@ -15,14 +15,6 @@ O site foi projetado como se fosse:
 - Um **arquivo confidencial**
 - Um **sistema interno acessível apenas por credenciais**
 
-Inspirado por:
-- Analog Horror  
-- SCP Foundation  
-- Interfaces de sistemas antigos (Windows XP, CRT)  
-- Sites de ARG e universos narrativos persistentes  
-
----
-
 ## 🧩 Funcionalidades Principais
 
 ### 🌐 Site Institucional
@@ -84,7 +76,8 @@ Mas agora que está… **a N.O.I.R está observando**.
 
 ## 🧬 Autor
 
-* **Criado por:** CiborgLuiz, Daniilouw, Vr0zt
+* **Site criado por:** CiborgLuiz
+* **Projeto criado por:** CiborgLuiz, Daniilouw, Vr0zt
 * **Projeto:** N.O.I.R SMP
 * **Status:** Em desenvolvimento contínuo
 

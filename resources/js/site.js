@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupRevealTargets();
     setupInteractivePanels();
     setupHeroDrift();
+    setupEasterEggs();
 });
 
 function setupLoader() {
@@ -260,4 +261,125 @@ function setupHeroDrift() {
         hero.style.setProperty('--hero-shift-x', '0px');
         hero.style.setProperty('--hero-shift-y', '0px');
     });
+}
+
+function setupEasterEggs() {
+    const keyHistory = [];
+    const maxHistory = 16;
+    const konamiSequences = [
+        ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'],
+        ['w', 'w', 's', 's', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'],
+        ['w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'],
+    ];
+
+    document.addEventListener('keydown', (event) => {
+        if (isTypingField(event.target)) {
+            return;
+        }
+
+        const key = event.key.toLowerCase();
+
+        keyHistory.push(key);
+
+        if (keyHistory.length > maxHistory) {
+            keyHistory.shift();
+        }
+
+        if (konamiSequences.some((sequence) => endsWithSequence(keyHistory, sequence))) {
+            toggleRetroMode();
+            keyHistory.length = 0;
+            return;
+        }
+
+        if (endsWithSequence(keyHistory, ['n', 'o', 'i', 'r'])) {
+            pulseBodyClass('noir-whisper-mode', 4200);
+            showEasterSignal('OBSERVADOR DETECTADO', 'noir-easter-whisper', 3000);
+            keyHistory.length = 0;
+            return;
+        }
+
+        if (endsWithSequence(keyHistory, ['s', 'e', 't', 'i', 's'])) {
+            pulseBodyClass('noir-setis-breach', 5200);
+            showEasterSignal('NIVEL SETIS EM RUPTURA', 'noir-easter-setis', 3600);
+            keyHistory.length = 0;
+        }
+    });
+
+    document.querySelectorAll('.logo').forEach((logo) => {
+        let logoClicks = 0;
+        let lastLogoClick = 0;
+
+        logo.addEventListener('click', () => {
+            const now = performance.now();
+
+            if (now - lastLogoClick > 1400) {
+                logoClicks = 0;
+            }
+
+            lastLogoClick = now;
+            logoClicks += 1;
+
+            if (logoClicks >= 20) {
+                logoClicks = 0;
+                pulseBodyClass('noir-logo-breach', 5200);
+                showEasterSignal('A LOGO RESPONDEU', 'noir-easter-logo', 3300);
+            }
+        });
+    });
+}
+
+function isTypingField(target) {
+    if (!(target instanceof HTMLElement)) {
+        return false;
+    }
+
+    return target.matches('input, textarea, select, [contenteditable="true"]');
+}
+
+function endsWithSequence(history, sequence) {
+    if (history.length < sequence.length) {
+        return false;
+    }
+
+    return sequence.every((key, index) => history[history.length - sequence.length + index] === key);
+}
+
+function toggleRetroMode() {
+    document.body.classList.toggle('noir-retro-mode');
+    showEasterSignal(
+        document.body.classList.contains('noir-retro-mode') ? 'SINAL ANALOGICO ATIVADO' : 'SINAL RESTAURADO',
+        'noir-easter-retro',
+        2600
+    );
+}
+
+function pulseBodyClass(className, duration) {
+    document.body.classList.add(className);
+
+    window.setTimeout(() => {
+        document.body.classList.remove(className);
+    }, duration);
+}
+
+function showEasterSignal(message, className, duration) {
+    const existing = document.querySelector('[data-noir-easter]');
+
+    if (existing) {
+        existing.remove();
+    }
+
+    const signal = document.createElement('div');
+    signal.className = `noir-easter-signal ${className}`;
+    signal.dataset.noirEaster = 'true';
+    signal.textContent = message;
+
+    document.body.appendChild(signal);
+
+    window.setTimeout(() => {
+        signal.classList.add('is-leaving');
+    }, Math.max(0, duration - 600));
+
+    window.setTimeout(() => {
+        signal.remove();
+    }, duration);
 }

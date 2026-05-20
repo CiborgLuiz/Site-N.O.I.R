@@ -8,10 +8,10 @@
         @foreach($files as $file)
             <div class="file-icon"
                 onclick="openFile(
-                    '{{ $file->type }}',
-                    '{{ $file->name }}',
-                    '{{ $file->content }}',
-                    '{{ asset($file->path) }}'
+                    @js($file->type),
+                    @js($file->name),
+                    @js($file->content),
+                    @js($file->path ? asset($file->path) : '')
                 )">
                 @switch($file->type)
                     @case('mp3')

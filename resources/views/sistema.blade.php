@@ -183,20 +183,20 @@
             let body = '';
 
             if (type === 'txt') {
-                body = `<pre class="txt-viewer">${content}</pre>`;
+                body = `<pre class="txt-viewer">${escapeHtml(content)}</pre>`;
             }
 
             if (type === 'png' || type === 'jpg') {
-                body = `<img src="${path}" class="img-viewer">`;
+                body = `<img src="${escapeHtml(path)}" class="img-viewer">`;
             }
 
             if (type === 'mp3') {
-                body = `<audio controls autoplay src="${path}"></audio>`;
+                body = `<audio controls autoplay src="${escapeHtml(path)}"></audio>`;
             }
 
             if (type === 'mp4') {
                 body = `
-            <iframe src="${content}" 
+            <iframe src="${escapeHtml(content)}" 
                 width="100%" height="260"
                 allowfullscreen></iframe>
         `;
@@ -208,7 +208,7 @@
             win.style.left = "120px";
             win.innerHTML = `
         <div class="window-header">
-            <span>${name}</span>
+            <span>${escapeHtml(name)}</span>
             <button onclick="this.closest('.window').remove()">✕</button>
         </div>
         <div class="window-body">${body}</div>
@@ -216,6 +216,16 @@
 
             document.getElementById('windows').appendChild(win);
             enableDrag();
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
         }
 
         function enableDrag() {

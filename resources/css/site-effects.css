@@ -730,3 +730,261 @@ body::after {
         transform: translateY(-10px);
     }
 }
+
+body.noir-retro-mode {
+    background: #000 !important;
+    color: #f3f3f3 !important;
+    font-family: "Courier New", Courier, monospace !important;
+}
+
+body.noir-retro-mode *,
+body.noir-retro-mode *::before,
+body.noir-retro-mode *::after {
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: none !important;
+    letter-spacing: 0 !important;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.45) !important;
+}
+
+body.noir-retro-mode .navbar,
+body.noir-retro-mode .admin-topbar,
+body.noir-retro-mode .section,
+body.noir-retro-mode .card,
+body.noir-retro-mode .status-box,
+body.noir-retro-mode .archive-card,
+body.noir-retro-mode .admin-panel,
+body.noir-retro-mode .admin-auth-panel {
+    background: #050505 !important;
+    color: #f3f3f3 !important;
+}
+
+body.noir-retro-mode a,
+body.noir-retro-mode .logo,
+body.noir-retro-mode .nav-accent {
+    color: #fff !important;
+}
+
+body.noir-retro-mode img,
+body.noir-retro-mode canvas,
+body.noir-retro-mode video,
+body.noir-retro-mode iframe {
+    filter: grayscale(1) contrast(1.45) brightness(0.86) !important;
+}
+
+body.noir-retro-mode #noir-bg {
+    opacity: 0.24;
+}
+
+body.noir-retro-mode::after {
+    z-index: 15000;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.18) 0,
+            rgba(255, 255, 255, 0.18) 1px,
+            transparent 2px,
+            transparent 6px
+        ),
+        radial-gradient(circle at center, transparent 52%, rgba(0, 0, 0, 0.8) 100%);
+    mix-blend-mode: normal;
+    opacity: 0.42;
+    animation:
+        noirRetroScan 0.72s linear infinite,
+        noirRetroFlicker 0.13s steps(2) infinite;
+}
+
+body.noir-retro-mode::before {
+    z-index: 14999;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    animation: noirRetroRoll 5s linear infinite;
+}
+
+.noir-easter-signal {
+    position: fixed;
+    left: 50%;
+    top: 18%;
+    z-index: 18000;
+    width: min(92vw, 520px);
+    border: 1px solid rgba(240, 210, 166, 0.55);
+    background: rgba(4, 4, 5, 0.9);
+    color: #f0d3a8;
+    font: 700 0.82rem "Courier New", monospace;
+    letter-spacing: 0.12rem;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    animation: noirSignalArrive 0.22s ease-out both, noirSignalNoise 0.32s steps(2) infinite;
+}
+
+.noir-easter-signal.is-leaving {
+    animation: noirSignalLeave 0.55s ease-in both;
+}
+
+.noir-easter-setis {
+    border-color: rgba(255, 60, 60, 0.72);
+    color: #ff9c9c;
+}
+
+.noir-easter-whisper {
+    border-color: rgba(170, 190, 210, 0.58);
+    color: #d9e9ff;
+}
+
+.noir-easter-logo {
+    border-color: rgba(255, 255, 255, 0.72);
+    color: #fff;
+}
+
+body.noir-logo-breach .logo {
+    animation: noirLogoBreach 0.16s steps(2) infinite;
+}
+
+body.noir-logo-breach .logo::before {
+    filter: grayscale(1) contrast(2);
+    animation: noirLogoPulse 0.42s ease-in-out infinite;
+}
+
+body.noir-whisper-mode .hero,
+body.noir-whisper-mode .section,
+body.noir-whisper-mode .admin-shell,
+body.noir-whisper-mode .system-wrapper {
+    animation: noirWhisperShift 0.24s steps(2) infinite;
+}
+
+body.noir-setis-breach {
+    animation: noirSetisShake 0.16s steps(2) infinite;
+}
+
+body.noir-setis-breach::before {
+    z-index: 14998;
+    background:
+        radial-gradient(circle at center, transparent 45%, rgba(120, 0, 0, 0.62) 100%),
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(255, 0, 0, 0.08) 17px, transparent 18px);
+    opacity: 1;
+    animation: noirSetisPulse 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes noirRetroScan {
+    from {
+        background-position: 0 0, center;
+    }
+
+    to {
+        background-position: 0 18px, center;
+    }
+}
+
+@keyframes noirRetroFlicker {
+    0% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.48;
+    }
+
+    100% {
+        opacity: 0.39;
+    }
+}
+
+@keyframes noirRetroRoll {
+    from {
+        transform: translateY(-4%);
+    }
+
+    to {
+        transform: translateY(4%);
+    }
+}
+
+@keyframes noirSignalArrive {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes noirSignalLeave {
+    to {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+}
+
+@keyframes noirSignalNoise {
+    0%,
+    100% {
+        clip-path: inset(0);
+    }
+
+    50% {
+        clip-path: inset(8% 0 12% 0);
+    }
+}
+
+@keyframes noirLogoBreach {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(2px, -1px);
+    }
+
+    100% {
+        transform: translate(-1px, 1px);
+    }
+}
+
+@keyframes noirLogoPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+}
+
+@keyframes noirWhisperShift {
+    0%,
+    100% {
+        filter: blur(0);
+        transform: translate(0);
+    }
+
+    50% {
+        filter: blur(1px);
+        transform: translate(-1px, 1px);
+    }
+}
+
+@keyframes noirSetisShake {
+    0%,
+    100% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(1px, -1px);
+    }
+}
+
+@keyframes noirSetisPulse {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 0.9;
+    }
+}
