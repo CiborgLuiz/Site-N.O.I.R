@@ -15,6 +15,12 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
+    'uploads_disk' => env('UPLOADS_DISK', env('AWS_BUCKET') ? 's3' : 'public_uploads'),
+
+    'uploads_path_prefix' => trim(env('UPLOADS_PATH_PREFIX', 'uploads'), '/'),
+
+    'upload_max_kb' => (int) env('ADMIN_UPLOAD_MAX_KB', 3072),
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -47,6 +53,15 @@ return [
             'report' => false,
         ],
 
+        'public_uploads' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/'),
+            'visibility' => 'public',
+            'throw' => true,
+            'report' => true,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -56,8 +71,8 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
+            'throw' => true,
+            'report' => true,
         ],
 
     ],

@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('file_access_keys');
+        Schema::dropIfExists('access_keys');
     }
 };

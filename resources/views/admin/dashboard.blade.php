@@ -9,6 +9,7 @@
 </head>
 <body
     class="admin-page noir-loading"
+    data-upload-max-kb="{{ config('filesystems.upload_max_kb', 3072) }}"
     style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
 >
     @include('partials.site-loader')
@@ -77,7 +78,7 @@
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Inserir arquivo de entidade</h2>
-                        <p class="admin-muted">Cria um registro em `Archive` e envia a imagem para `public/images/entidades/`.</p>
+                        <p class="admin-muted">Cria um registro em `Archive` e envia a imagem para o storage de uploads.</p>
                     </div>
                 </div>
 
@@ -107,8 +108,8 @@
 
                     <label>
                         Imagem da entidade
-                        <input type="file" name="image" accept="image/png,image/jpeg,image/webp" required>
-                        <span class="admin-hint">Destino: public/images/entidades/</span>
+                        <input type="file" name="image" accept="image/png,image/jpeg,image/webp" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}" required>
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <label class="admin-wide">
@@ -124,7 +125,7 @@
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Arquivos de entidade</h2>
-                        <p class="admin-muted">Remover aqui também apaga a imagem enviada quando ela está em `public/images/entidades/`.</p>
+                        <p class="admin-muted">Remover aqui também apaga a imagem enviada pelo painel.</p>
                     </div>
                 </div>
 
@@ -134,7 +135,7 @@
                             <div>
                                 <strong>{{ $archive->identifier }} // {{ $archive->name }}</strong>
                                 <span>{{ strtoupper($archive->classification) }}</span>
-                                <small>{{ $archive->image_path }}</small>
+                                <small>{{ $archive->image_label }}</small>
                             </div>
 
                             <form method="POST" action="{{ route('admin.archives.destroy', $archive) }}" data-confirm-delete="Remover esta entidade e a imagem dela?" data-async-delete>
@@ -250,14 +251,14 @@
 
                     <label class="admin-file-field" data-file-field="png">
                         Imagem do sistema
-                        <input type="file" name="system_image" accept="image/png,image/jpeg,image/webp,image/gif">
-                        <span class="admin-hint">Destino: public/images/sistema/</span>
+                        <input type="file" name="system_image" accept="image/png,image/jpeg,image/webp,image/gif" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}">
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <label class="admin-file-field" data-file-field="mp3">
                         Audio do sistema
-                        <input type="file" name="system_audio" accept="audio/mpeg,audio/wav,audio/ogg">
-                        <span class="admin-hint">Destino: public/sounds/sistema/</span>
+                        <input type="file" name="system_audio" accept="audio/mpeg,audio/wav,audio/ogg" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}">
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <button type="submit" class="admin-button" @disabled($folders->isEmpty())>Inserir arquivo</button>
@@ -268,7 +269,7 @@
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Arquivos nas pastas</h2>
-                        <p class="admin-muted">Remover PNG ou MP3 também apaga o upload salvo em `public/images/sistema/` ou `public/sounds/sistema/`.</p>
+                        <p class="admin-muted">Remover PNG ou MP3 também apaga o upload salvo pelo painel.</p>
                     </div>
                 </div>
 
@@ -281,7 +282,7 @@
                                 <div class="admin-list-row admin-list-row-actions admin-file-row">
                                     <div>
                                         <span>{{ strtoupper($file->type) }} // {{ $file->name }}</span>
-                                        <small>{{ $file->path ?: \Illuminate\Support\Str::limit($file->content, 90) }}</small>
+                                        <small>{{ $file->path_label ?: \Illuminate\Support\Str::limit($file->content, 90) }}</small>
                                     </div>
 
                                     <form method="POST" action="{{ route('admin.files.destroy', $file) }}" data-confirm-delete="Remover este arquivo da pasta?" data-async-delete>
@@ -398,6 +399,7 @@
             const tabPanels = document.querySelectorAll('[data-admin-tab-panel]');
             const typeSelect = document.getElementById('admin-file-type');
             const fields = document.querySelectorAll('[data-file-field]');
+            const maxUploadKb = Number(document.body.dataset.uploadMaxKb || 3072);
 
             function activateTab(tabName, updateHash = false) {
                 const hasPanel = Array.from(tabPanels).some((panel) => panel.dataset.adminTabPanel === tabName);
@@ -545,6 +547,20 @@
 
                     event.preventDefault();
                     submitDeleteForm(form);
+                });
+            });
+
+            document.querySelectorAll('input[type="file"][data-max-upload-kb]').forEach((input) => {
+                input.addEventListener('change', () => {
+                    const maxKb = Number(input.dataset.maxUploadKb || maxUploadKb);
+                    const file = input.files && input.files[0];
+
+                    if (! file || file.size <= maxKb * 1024) {
+                        return;
+                    }
+
+                    input.value = '';
+                    showAdminNotice(`Arquivo acima do limite de ${(maxKb / 1024).toFixed(1)} MB para deploy no Vercel.`, true);
                 });
             });
 

@@ -7,11 +7,13 @@ use App\Models\AdminInviteKey;
 use App\Models\Archive;
 use App\Models\File as SystemFile;
 use App\Models\Folder;
+use App\Support\MediaStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File as FileSystem;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class AdminController extends Controller
 {
@@ -220,11 +222,11 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'identifier' => ['required', 'string', 'max:80', 'unique:archives,identifier'],
             'classification' => ['required', Rule::in(self::CLASSIFICATIONS)],
-            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:'.$this->uploadMaxKilobytes()],
             'description' => ['required', 'string', 'max:4000'],
         ]);
 
-        $imagePath = $this->storePublicUpload($request, 'image', 'images/entidades');
+        $imagePath = $this->storeUploadOrFail($request, 'image', 'images/entidades');
 
         Archive::create([
             'name' => $data['name'],
@@ -279,18 +281,18 @@ class AdminController extends Controller
 
         if ($data['type'] === 'png') {
             $request->validate([
-                'system_image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp,gif', 'max:5120'],
+                'system_image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp,gif', 'max:'.$this->uploadMaxKilobytes()],
             ]);
 
-            $payload['path'] = $this->storePublicUpload($request, 'system_image', 'images/sistema');
+            $payload['path'] = $this->storeUploadOrFail($request, 'system_image', 'images/sistema');
         }
 
         if ($data['type'] === 'mp3') {
             $request->validate([
-                'system_audio' => ['required', 'file', 'mimes:mp3,mpga,wav,ogg', 'max:15360'],
+                'system_audio' => ['required', 'file', 'mimes:mp3,mpga,wav,ogg', 'max:'.$this->uploadMaxKilobytes()],
             ]);
 
-            $payload['path'] = $this->storePublicUpload($request, 'system_audio', 'sounds/sistema');
+            $payload['path'] = $this->storeUploadOrFail($request, 'system_audio', 'sounds/sistema');
         }
 
         if ($data['type'] === 'mp4') {
@@ -310,7 +312,7 @@ class AdminController extends Controller
     {
         $this->requireAdmin($request);
 
-        $this->deletePublicFile($archive->image_path);
+        $this->deleteStoredMedia($archive->image_path);
         $archive->delete();
 
         return $this->deleteResponse($request, 'archives', 'Arquivo de entidade removido.', [
@@ -325,7 +327,7 @@ class AdminController extends Controller
         $folder->load('files');
 
         foreach ($folder->files as $file) {
-            $this->deletePublicFile($file->path);
+            $this->deleteStoredMedia($file->path);
         }
 
         $folder->delete();
@@ -337,7 +339,7 @@ class AdminController extends Controller
     {
         $this->requireAdmin($request);
 
-        $this->deletePublicFile($file->path);
+        $this->deleteStoredMedia($file->path);
         $file->delete();
 
         return $this->deleteResponse($request, 'files', 'Arquivo removido da pasta.');
@@ -416,52 +418,27 @@ class AdminController extends Controller
         return hash('sha256', Str::upper(trim($code)));
     }
 
-    private function storePublicUpload(Request $request, string $field, string $directory): string
+    private function storeUploadOrFail(Request $request, string $field, string $directory): string
     {
-        $file = $request->file($field);
-        $targetDirectory = public_path($directory);
+        try {
+            return MediaStorage::store($request->file($field), $directory);
+        } catch (Throwable $exception) {
+            report($exception);
 
-        if (! FileSystem::isDirectory($targetDirectory)) {
-            FileSystem::makeDirectory($targetDirectory, 0755, true);
+            throw ValidationException::withMessages([
+                $field => 'Nao foi possivel salvar o upload. Verifique o storage configurado.',
+            ]);
         }
-
-        $baseName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeName = Str::slug($baseName) ?: 'arquivo';
-        $fileName = $safeName.'-'.now()->format('YmdHis').'-'.Str::lower(Str::random(6)).'.'.$file->getClientOriginalExtension();
-
-        $file->move($targetDirectory, $fileName);
-
-        return trim($directory.'/'.$fileName, '/');
     }
 
-    private function deletePublicFile(?string $path): void
+    private function deleteStoredMedia(?string $path): void
     {
-        if (! $path) {
-            return;
-        }
+        MediaStorage::delete($path);
+    }
 
-        $path = trim($path, '/');
-        $allowedPrefixes = [
-            'images/entidades/',
-            'images/sistema/',
-            'sounds/sistema/',
-        ];
-
-        if (! Str::startsWith($path, $allowedPrefixes)) {
-            return;
-        }
-
-        $fullPath = public_path($path);
-        $publicRoot = realpath(public_path());
-        $realPath = realpath($fullPath);
-
-        if (! $publicRoot || ! $realPath || ! Str::startsWith($realPath, $publicRoot.DIRECTORY_SEPARATOR)) {
-            return;
-        }
-
-        if (FileSystem::isFile($realPath)) {
-            FileSystem::delete($realPath);
-        }
+    private function uploadMaxKilobytes(): int
+    {
+        return max(256, (int) config('filesystems.upload_max_kb', 3072));
     }
 
     private function normalizeVideoEmbed(string $url): string

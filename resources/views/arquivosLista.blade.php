@@ -74,7 +74,7 @@
 
                 <div class="archive-card class-{{ $classSlug }}">
                     <div class="archive-image">
-                        <img src="{{ asset($archive->image_path) }}" alt="{{ $archive->name }}">
+                        <img src="{{ $archive->image_url }}" alt="{{ $archive->name }}">
                     </div>
 
                     <div class="archive-info">

@@ -11,7 +11,7 @@
                     @js($file->type),
                     @js($file->name),
                     @js($file->content),
-                    @js($file->path ? asset($file->path) : '')
+                    @js($file->url)
                 )">
                 @switch($file->type)
                     @case('mp3')
