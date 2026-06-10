@@ -12,30 +12,30 @@
     },
 
     "rewrites": [
-        {
-            "source": "/build/(.*)",
-            "destination": "/build/$1"
-        },
-        {
-            "source": "/images/(.*)",
-            "destination": "/images/$1"
-        },
-        {
-            "source": "/sounds/(.*)",
-            "destination": "/sounds/$1"
-        },
-        {
-            "source": "/favicon.ico",
-            "destination": "/favicon.ico"
-        },
-        {
-            "source": "/robots.txt",
-            "destination": "/robots.txt"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/api/index.php"
-        }
+    {
+        "source": "/build/(.*)",
+        "destination": "/public/build/$1"
+    },
+    {
+        "source": "/images/(.*)",
+        "destination": "/public/images/$1"
+    },
+    {
+        "source": "/sounds/(.*)",
+        "destination": "/public/sounds/$1"
+    },
+    {
+        "source": "/favicon.ico",
+        "destination": "/public/favicon.ico"
+    },
+    {
+        "source": "/robots.txt",
+        "destination": "/public/robots.txt"
+    },
+    {
+        "source": "/(.*)",
+        "destination": "/api/index.php"
+    }
     ],
 
     "env": {
