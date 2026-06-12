@@ -113,9 +113,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/debug-files', function () {
     return response()->json([
-        'public_exists' => is_dir(public_path()),
-        'build_exists' => is_dir(public_path('build')),
-        'assets_exists' => is_dir(public_path('build/assets')),
-        'public_files' => scandir(public_path()),
+        'manifest' => file_exists(public_path('build/manifest.json')),
+        'css' => file_exists(public_path('build/assets/home-BSWOmypJ.css')),
+        'asset_url' => asset('build/assets/home-BSWOmypJ.css'),
+        'public_path' => public_path(),
     ]);
 });
