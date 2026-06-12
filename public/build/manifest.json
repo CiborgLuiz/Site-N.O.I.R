@@ -1,0 +1,89 @@
+{
+  "resources/css/admin.css": {
+    "file": "assets/admin-BWUNQQEd.css",
+    "src": "resources/css/admin.css",
+    "isEntry": true,
+    "name": "admin",
+    "names": [
+      "admin.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-kzs0HhYb.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/arquivos.css": {
+    "file": "assets/arquivos-wkD0MUqk.css",
+    "src": "resources/css/arquivos.css",
+    "isEntry": true,
+    "name": "arquivos",
+    "names": [
+      "arquivos.css"
+    ]
+  },
+  "resources/css/home.css": {
+    "file": "assets/home-BSWOmypJ.css",
+    "src": "resources/css/home.css",
+    "isEntry": true,
+    "name": "home",
+    "names": [
+      "home.css"
+    ]
+  },
+  "resources/css/protocolos-effects.css": {
+    "file": "assets/protocolos-effects-B2qFSNBp.css",
+    "src": "resources/css/protocolos-effects.css",
+    "isEntry": true,
+    "name": "protocolos-effects",
+    "names": [
+      "protocolos-effects.css"
+    ]
+  },
+  "resources/css/system.css": {
+    "file": "assets/system-0yH1MarM.css",
+    "src": "resources/css/system.css",
+    "isEntry": true,
+    "name": "system",
+    "names": [
+      "system.css"
+    ]
+  },
+  "resources/css/terminal.css": {
+    "file": "assets/terminal-swJK5By9.css",
+    "src": "resources/css/terminal.css",
+    "isEntry": true,
+    "name": "terminal",
+    "names": [
+      "terminal.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CKl8NZMC.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/noir-bg.js": {
+    "file": "assets/noir-bg-BCx_780G.js",
+    "name": "noir-bg",
+    "src": "resources/js/noir-bg.js",
+    "isEntry": true
+  },
+  "resources/js/site.js": {
+    "file": "assets/site-B5WxfvmZ.js",
+    "name": "site",
+    "src": "resources/js/site.js",
+    "isEntry": true
+  },
+  "resources/js/terminal.js": {
+    "file": "assets/terminal-CRivlMKP.js",
+    "name": "terminal",
+    "src": "resources/js/terminal.js",
+    "isEntry": true
+  }
+}
