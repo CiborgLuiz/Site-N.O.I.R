@@ -3,6 +3,8 @@ import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+    base: '/build/',
+
     plugins: [
         laravel({
             input: [
@@ -19,8 +21,8 @@ export default defineConfig({
                 'resources/js/terminal.js',
             ],
             refresh: true,
-            publicDirectory: 'public'
         }),
         tailwindcss(),
-    ]
+    ],
 });
+
