@@ -111,12 +111,43 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
+Route::get('/build/{path}', function ($path) {
+
+    $file = public_path('build/' . $path);
+
+    if (!file_exists($file)) {
+        abort(404);
+    }
+
+    return response()->file($file);
+
+})->where('path', '.*');
+
+Route::get('/images/{path}', function ($path) {
+
+    $file = public_path('images/' . $path);
+
+    if (!file_exists($file)) {
+        abort(404);
+    }
+
+    return response()->file($file);
+
+})->where('path', '.*');
+
+
+Route::get('/sounds/{path}', function ($path) {
+
+    $file = public_path('sounds/' . $path);
+
+    abort_unless(file_exists($file), 404);
+
+    return response()->file($file);
+
+})->where('path', '.*');
+
 Route::get('/debug-css', function () {
-
-    $file = public_path('build/assets/home-BSWOmypJ.css');
-
-    return response()->file($file, [
-        'Content-Type' => 'text/css'
-    ]);
-
+    return response()->file(
+        public_path('build/assets/home-BSWOmypJ.css')
+    );
 });
