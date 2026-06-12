@@ -1,10 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-echo "PASSOU 1<br>";
-
 $temporaryPaths = [
     'APP_CONFIG_CACHE' => '/tmp/laravel/cache/config.php',
     'APP_EVENTS_CACHE' => '/tmp/laravel/cache/events.php',
@@ -13,8 +8,6 @@ $temporaryPaths = [
     'APP_SERVICES_CACHE' => '/tmp/laravel/cache/services.php',
     'VIEW_COMPILED_PATH' => '/tmp/laravel/views',
 ];
-
-echo "PASSOU 2<br>";
 
 foreach ($temporaryPaths as $key => $path) {
     if (getenv($key) === false) {
@@ -31,15 +24,5 @@ foreach ($temporaryPaths as $key => $path) {
         mkdir($directory, 0755, true);
     }
 }
-
-echo "PASSOU 3<br>";
-
-require __DIR__.'/../vendor/autoload.php';
-
-echo "PASSOU 4<br>";
-
-$app = require __DIR__.'/../bootstrap/app.php';
-
-echo "PASSOU 5<br>";
 
 require __DIR__.'/../public/index.php';
