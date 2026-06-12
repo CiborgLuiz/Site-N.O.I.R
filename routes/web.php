@@ -110,3 +110,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/sistema-arquivos/{file}', [AdminController::class, 'destroyFile'])->name('files.destroy');
 
 });
+
+Route::get('/debug-vite', function () {
+    return [
+        'manifest_exists' => file_exists(public_path('build/manifest.json')),
+        'manifest_path' => public_path('build/manifest.json'),
+    ];
+});
