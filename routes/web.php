@@ -111,11 +111,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::get('/debug-static', function () {
-    return [
-        'manifest_exists' => file_exists(public_path('build/manifest.json')),
-        'css_exists' => file_exists(public_path('build/assets/home-BSWOmypJ.css')),
-        'favicon_exists' => file_exists(public_path('favicon.ico')),
-        'public_path' => public_path(),
-    ];
+Route::get('/debug-files', function () {
+    return response()->json([
+        'public_exists' => is_dir(public_path()),
+        'build_exists' => is_dir(public_path('build')),
+        'assets_exists' => is_dir(public_path('build/assets')),
+        'public_files' => scandir(public_path()),
+    ]);
 });
