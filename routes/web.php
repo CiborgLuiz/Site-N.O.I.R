@@ -151,3 +151,15 @@ Route::get('/debug-css', function () {
         public_path('build/assets/home-BSWOmypJ.css')
     );
 });
+
+Route::get('/test-css', function () {
+    return '
+    <html>
+    <head>
+        <link rel="stylesheet" href="/build/assets/home-BSWOmypJ.css">
+    </head>
+    <body>
+        <h1>TESTE CSS</h1>
+    </body>
+    </html>';
+});
