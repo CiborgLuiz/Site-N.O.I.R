@@ -111,11 +111,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::get('/debug-files', function () {
-    return response()->json([
-        'manifest' => file_exists(public_path('build/manifest.json')),
-        'css' => file_exists(public_path('build/assets/home-BSWOmypJ.css')),
-        'asset_url' => asset('build/assets/home-BSWOmypJ.css'),
-        'public_path' => public_path(),
+Route::get('/debug-css', function () {
+
+    $file = public_path('build/assets/home-BSWOmypJ.css');
+
+    return response()->file($file, [
+        'Content-Type' => 'text/css'
     ]);
+
 });
