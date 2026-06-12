@@ -111,9 +111,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::get('/debug-vite', function () {
+Route::get('/debug-static', function () {
     return [
-        'manifest_exists' => file_exists(public_path('build/manifest.json')),
-        'manifest_path' => public_path('build/manifest.json'),
+        'manifest' => file_exists(public_path('build/manifest.json')),
+        'css' => file_exists(public_path('build/assets/home-BSWOmypJ.css')),
+        'favicon' => file_exists(public_path('favicon.ico')),
     ];
 });
