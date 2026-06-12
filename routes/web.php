@@ -146,20 +146,24 @@ Route::get('/sounds/{path}', function ($path) {
 
 })->where('path', '.*');
 
-Route::get('/debug-css', function () {
-    return response()->file(
-        public_path('build/assets/home-BSWOmypJ.css')
-    );
-});
+Route::get('/build/assets/{file}', function ($file) {
 
-Route::get('/test-css', function () {
-    return '
-    <html>
-    <head>
-        <link rel="stylesheet" href="/build/assets/home-BSWOmypJ.css">
-    </head>
-    <body>
-        <h1>TESTE CSS</h1>
-    </body>
-    </html>';
-});
+    $path = public_path("build/assets/$file");
+
+    abort_unless(file_exists($path), 404);
+
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    return response()->make(
+        file_get_contents($path),
+        200,
+        [
+            'Content-Type' => match ($ext) {
+                'css' => 'text/css',
+                'js' => 'application/javascript',
+                default => mime_content_type($path),
+            }
+        ]
+    );
+
+})->where('file', '.*');
