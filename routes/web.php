@@ -111,18 +111,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::get('/build/{path}', function ($path) {
-
-    $file = public_path('build/' . $path);
-
-    if (!file_exists($file)) {
-        abort(404);
-    }
-
-    return response()->file($file);
-
-})->where('path', '.*');
-
 Route::get('/images/{path}', function ($path) {
 
     $file = public_path('images/' . $path);
@@ -146,24 +134,36 @@ Route::get('/sounds/{path}', function ($path) {
 
 })->where('path', '.*');
 
-Route::get('/build/assets/{file}', function ($file) {
+Route::get('/build/{path}', function ($path) {
 
-    $path = public_path("build/assets/$file");
+    $file = public_path('build/' . $path);
 
-    abort_unless(file_exists($path), 404);
+    abort_unless(file_exists($file), 404);
 
-    $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-    return response()->make(
-        file_get_contents($path),
+    $mimeTypes = [
+        'css' => 'text/css',
+        'js'  => 'application/javascript',
+        'json'=> 'application/json',
+        'png' => 'image/png',
+        'jpg' => 'image/jpeg',
+        'jpeg'=> 'image/jpeg',
+        'svg' => 'image/svg+xml',
+        'woff'=> 'font/woff',
+        'woff2'=> 'font/woff2',
+    ];
+
+    return response(
+        file_get_contents($file),
         200,
         [
-            'Content-Type' => match ($ext) {
-                'css' => 'text/css',
-                'js' => 'application/javascript',
-                default => mime_content_type($path),
-            }
+            'Content-Type' => $mimeTypes[$ext]
+                ?? mime_content_type($file)
+                ?? 'application/octet-stream',
+
+            'Cache-Control' => 'public, max-age=31536000'
         ]
     );
 
-})->where('file', '.*');
+})->where('path', '.*');
