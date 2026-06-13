@@ -32,7 +32,7 @@
     <meta name="theme-color" content="#4B0082">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,6 @@
     <title>N.O.I.R - Protocolos</title>
     @vite('resources/css/home.css')
     @vite('resources/css/protocolos-effects.css')
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
 </head>
 
 <body

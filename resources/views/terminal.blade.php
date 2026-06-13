@@ -31,7 +31,7 @@
     <meta name="theme-color" content="#4B0082">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,7 +75,6 @@
     @stack('head')
     <title>N.O.I.R - Terminal</title>
     @vite('resources/css/terminal.css')
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
 </head>
 <body>
     <canvas id="matrix-bg" aria-hidden="true"></canvas>

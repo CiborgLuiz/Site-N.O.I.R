@@ -31,7 +31,7 @@
     <meta name="theme-color" content="#4B0082">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +74,6 @@
     </style>
     @stack('head')
     <title>N.O.I.R - Painel Admin</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/admin.css')
 </head>
 <body
