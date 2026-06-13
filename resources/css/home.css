@@ -170,8 +170,8 @@ body {
     display: inline-block;
     margin-top: 2rem;
     padding: 0.6rem 1.5rem;
-    border: 1px solid var(--text-main);
-    color: var(--bg-main);
+    border: 1px solid var(--white);
+    color: var(--text-main);
     text-decoration: none;
     font-size: 0.8rem;
 }
