@@ -12,19 +12,19 @@
     <meta name="description" content="@yield('description', 'N.O.I.R é uma experiência única de Minecraft com mistérios, entidades, anomalias e eventos que desafiam a realidade.')">
 
     <meta name="keywords" content="Minecraft, N.O.I.R, SMP, Servidor Minecraft, Horror, Mistério, Survival, Modpack">
-    <meta name="author" content="Equipe N.O.I.R">
+    <meta name="author" content="Equipe N.O.I.R SMP">
 
     <!-- Open Graph (Discord, WhatsApp, Facebook, etc) -->
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="N.O.I.R">
-    <meta property="og:title" content="@yield('og_title', 'N.O.I.R')">
+    <meta property="og:site_name" content="N.O.I.R SMP">
+    <meta property="og:title" content="@yield('og_title', 'N.O.I.R SMP')">
     <meta property="og:description" content="@yield('og_description', 'Uma experiência de Minecraft onde a realidade nem sempre é o que parece.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('images/noir-preview.png') }}">
 
     <!-- Twitter/X -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('twitter_title', 'N.O.I.R')">
+    <meta name="twitter:title" content="@yield('twitter_title', 'N.O.I.R SMP')">
     <meta name="twitter:description" content="@yield('twitter_description', 'Uma experiência de Minecraft onde a realidade nem sempre é o que parece.')">
     <meta name="twitter:image" content="{{ asset('images/noir-preview.png') }}">
 
@@ -82,7 +82,7 @@
 
 <body
     class="system-page noir-loading"
-    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
+    style="--noir-logo-image: url('/logo/logo.png');"
 >
     @include('partials.site-loader')
 
