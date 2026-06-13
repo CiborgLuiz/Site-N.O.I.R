@@ -79,7 +79,7 @@
 </head>
 <body
     class="admin-page noir-loading"
-    style="--noir-logo-image: url('/public/images/logo.png');"
+    style="--noir-logo-image: url('/images/logo.png');"
 >
     @include('partials.site-loader')
 

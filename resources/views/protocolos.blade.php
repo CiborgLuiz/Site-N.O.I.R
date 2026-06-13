@@ -82,7 +82,7 @@
 
 <body
     class="noir-loading"
-    style="--noir-logo-image: url('/public/images/logo.png');"
+    style="--noir-logo-image: url('/images/logo.png');"
 >
     @include('partials.site-loader')
 

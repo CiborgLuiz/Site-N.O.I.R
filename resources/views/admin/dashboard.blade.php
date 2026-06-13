@@ -80,7 +80,7 @@
 <body
     class="admin-page noir-loading"
     data-upload-max-kb="{{ config('filesystems.upload_max_kb', 3072) }}"
-    style="--noir-logo-image: url('/public/images/logo.png');"
+    style="--noir-logo-image: url('/images/logo.png');"
 >
     @include('partials.site-loader')
 
