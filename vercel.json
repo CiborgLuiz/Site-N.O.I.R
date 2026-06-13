@@ -19,7 +19,7 @@
       "dest": "/public/js/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/((?!images|css|js|public).*)",
       "dest": "/api/index.php"
     }
   ]
