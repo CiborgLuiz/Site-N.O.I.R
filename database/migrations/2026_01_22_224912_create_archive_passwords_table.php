@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('archive_passwords', function (Blueprint $table) {
             $table->id();
-            $table->string('password');
+            $table->string('codigo_acesso');
             $table->timestamps();
         });
     }

@@ -11,12 +11,21 @@ class ArquivosController extends Controller
     public function unlock(Request $request)
     {
         $request->validate([
-            'password' => 'required'
+            'codigo_acesso' => 'required'
         ]);
 
         $senhaBanco = DB::table('archive_passwords')->first();
 
-        if (!$senhaBanco || !Hash::check($request->password, $senhaBanco->password)) {
+        if (!$senhaBanco) {
+            return back()->with('error', 'SISTEMA INDISPONÍVEL — NENHUMA CHAVE CADASTRADA');
+        }
+
+        $digitado = $request->input('codigo_acesso');
+        $salvoNoBanco = $senhaBanco->codigo_acesso;
+
+        $senhaValida = ($digitado === $salvoNoBanco) || Hash::check($digitado, $salvoNoBanco);
+
+        if (!$senhaValida) {
             return back()->with('error', 'ACESSO NEGADO — SENHA INVÁLIDA');
         }
 
