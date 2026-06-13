@@ -5,19 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ArquivosController extends Controller
 {
     public function unlock(Request $request)
     {
-        $request->validate([
+        // 1. Validação manual para evitar o "back()" automático do Laravel
+        $validator = Validator::make($request->all(), [
             'codigo_acesso' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('arquivos')->with('error', 'O código de acesso é obrigatório.');
+        }
 
         $senhaBanco = DB::table('archive_passwords')->first();
 
         if (!$senhaBanco) {
-            return back()->with('error', 'SISTEMA INDISPONÍVEL — NENHUMA CHAVE CADASTRADA');
+            return redirect()->route('arquivos')->with('error', 'SISTEMA INDISPONÍVEL — NENHUMA CHAVE CADASTRADA');
         }
 
         $digitado = $request->input('codigo_acesso');
@@ -26,7 +32,8 @@ class ArquivosController extends Controller
         $senhaValida = ($digitado === $salvoNoBanco) || Hash::check($digitado, $salvoNoBanco);
 
         if (!$senhaValida) {
-            return back()->with('error', 'ACESSO NEGADO — SENHA INVÁLIDA');
+            // 2. Redirecionamento explícito usando a rota nomeada
+            return redirect()->route('arquivos')->with('error', 'ACESSO NEGADO — SENHA INVÁLIDA');
         }
 
         session(['arquivos_autorizado' => true]);

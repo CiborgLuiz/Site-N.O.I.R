@@ -177,7 +177,7 @@
 
                     <label>
                         Imagem da entidade
-                        <input type="file" name="image" accept="image/png,image/jpeg,image/webp" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}" required>
+                        <input type="url" name="image_url" placeholder="https://link-da-imagem.png" required>
                         <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
@@ -320,13 +320,13 @@
 
                     <label class="admin-file-field" data-file-field="png">
                         Imagem do sistema
-                        <input type="file" name="system_image" accept="image/png,image/jpeg,image/webp,image/gif" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}">
+                        <input type="url" name="system_image" placeholder="https://link-da-imagem.png">
                         <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <label class="admin-file-field" data-file-field="mp3">
                         Audio do sistema
-                        <input type="file" name="system_audio" accept="audio/mpeg,audio/wav,audio/ogg" data-max-upload-kb="{{ config('filesystems.upload_max_kb', 3072) }}">
+                        <input type="url" name="system_audio" placeholder="https://link-do-audio.mp3">
                         <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 

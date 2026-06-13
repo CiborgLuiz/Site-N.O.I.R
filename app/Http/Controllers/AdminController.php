@@ -218,21 +218,20 @@ class AdminController extends Controller
     {
         $this->requireAdmin($request);
 
+        // Alterado de arquivo de imagem para validação de URL direta
         $data = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'identifier' => ['required', 'string', 'max:80', 'unique:archives,identifier'],
             'classification' => ['required', Rule::in(self::CLASSIFICATIONS)],
-            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:'.$this->uploadMaxKilobytes()],
+            'image_url' => ['required', 'url', 'max:2048'], 
             'description' => ['required', 'string', 'max:4000'],
         ]);
-
-        $imagePath = $this->storeUploadOrFail($request, 'image', 'images/entidades');
 
         Archive::create([
             'name' => $data['name'],
             'identifier' => $data['identifier'],
             'classification' => $data['classification'],
-            'image_path' => $imagePath,
+            'image_path' => $data['image_url'], // Salva o link direto na coluna existente do banco
             'description' => $data['description'],
         ]);
 
@@ -280,19 +279,21 @@ class AdminController extends Controller
         }
 
         if ($data['type'] === 'png') {
-            $request->validate([
-                'system_image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp,gif', 'max:'.$this->uploadMaxKilobytes()],
+            // Alterado para receber link de imagem externa
+            $validated = $request->validate([
+                'system_image_url' => ['required', 'url', 'max:2048'],
             ]);
 
-            $payload['path'] = $this->storeUploadOrFail($request, 'system_image', 'images/sistema');
+            $payload['path'] = $validated['system_image_url'];
         }
 
         if ($data['type'] === 'mp3') {
-            $request->validate([
-                'system_audio' => ['required', 'file', 'mimes:mp3,mpga,wav,ogg', 'max:'.$this->uploadMaxKilobytes()],
+            // Alterado para receber link de áudio externo
+            $validated = $request->validate([
+                'system_audio_url' => ['required', 'url', 'max:2048'],
             ]);
 
-            $payload['path'] = $this->storeUploadOrFail($request, 'system_audio', 'sounds/sistema');
+            $payload['path'] = $validated['system_audio_url'];
         }
 
         if ($data['type'] === 'mp4') {
@@ -420,6 +421,7 @@ class AdminController extends Controller
 
     private function storeUploadOrFail(Request $request, string $field, string $directory): string
     {
+        // Método mantido por compatibilidade interna, mas não será mais disparado para imagens/áudio
         try {
             return MediaStorage::store($request->file($field), $directory);
         } catch (Throwable $exception) {
@@ -433,7 +435,10 @@ class AdminController extends Controller
 
     private function deleteStoredMedia(?string $path): void
     {
-        MediaStorage::delete($path);
+        // Se for um link de internet (HTTP/HTTPS), ignora a deleção física local para não dar erro 500
+        if ($path && !str_starts_with($path, 'http://') && !str_starts_with($path, 'https://')) {
+            MediaStorage::delete($path);
+        }
     }
 
     private function uploadMaxKilobytes(): int
