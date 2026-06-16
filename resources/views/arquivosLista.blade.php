@@ -50,7 +50,7 @@
 
         a:hover {
             color: #c3a6ff;
-            text-shadow: 0 0 8px rgba(157,108,255,.6);
+            text-shadow: 0 0 8px rgba(157, 108, 255, .6);
         }
 
         a:active {
@@ -60,14 +60,14 @@
         a.special-link {
             display: inline-block;
             padding: 6px 12px;
-            border: 1px solid rgba(157,108,255,.3);
+            border: 1px solid rgba(157, 108, 255, .3);
             border-radius: 8px;
             backdrop-filter: blur(10px);
             transition: all .25s ease;
         }
 
         a.special-link:hover {
-            background: rgba(157,108,255,.15);
+            background: rgba(157, 108, 255, .15);
             border-color: #9d6cff;
             transform: translateY(-2px);
         }
@@ -78,10 +78,7 @@
     @vite('resources/css/arquivos.css')
 </head>
 
-<body
-    class="noir-loading"
-    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
->
+<body class="noir-loading" style="--noir-logo-image: url('{{ asset('images/logo.png') }}');">
     @include('partials.site-loader')
 
     <canvas id="noir-bg"></canvas>
@@ -120,28 +117,40 @@
                 return $text;
             }
 
-            $order = [
-                'neutralizado' => 1,
-                'seguro' => 2,
-                'totin' => 3,
-                'isop' => 4,
-                'denus' => 5,
-                'setis' => 6,
-            ];
+            $sortedArchives = $archives->sortBy(function ($archive) {
+                preg_match('/(\d+)/', $archive->identifier, $matches);
 
-            $sortedArchives = $archives->sortBy(function ($archive) use ($order) {
-                $slug = normalizeSlug($archive->classification);
-                return $order[$slug] ?? 99;
+                return isset($matches[1]) ? intval($matches[1]) : PHP_INT_MAX;
             });
         @endphp
+        <div class="archive-controls">
 
+            <input type="text" id="archive-search" class="archive-search"
+                placeholder="Pesquisar por nome, ID ou classificação...">
+
+            <select id="archive-filter" class="archive-filter">
+                <option value="">Todas as classificações</option>
+                <option value="neutralizado">Neutralizado</option>
+                <option value="seguro">Seguro</option>
+                <option value="totin">Totin</option>
+                <option value="isop">Isop</option>
+                <option value="denus">Denus</option>
+                <option value="setis">Setis</option>
+            </select>
+
+        </div>
+
+        <div id="archive-count" class="archive-count">
+            {{ count($sortedArchives) }} arquivos encontrados
+        </div>
         <div class="archive-grid">
             @foreach ($sortedArchives as $archive)
                 @php
                     $classSlug = normalizeSlug($archive->classification);
                 @endphp
 
-                <div class="archive-card class-{{ $classSlug }}">
+                <div class="archive-card class-{{ $classSlug }}" data-name="{{ strtolower($archive->name) }}"
+                    data-id="{{ strtolower($archive->identifier) }}" data-class="{{ strtolower($classSlug) }}">
                     <div class="archive-image">
                         <img src="{{ $archive->image_url }}" alt="{{ $archive->name }}">
                     </div>
@@ -305,7 +314,50 @@
 
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
 
+            const searchInput = document.getElementById("archive-search");
+            const filterSelect = document.getElementById("archive-filter");
+            const countElement = document.getElementById("archive-count");
+
+            function updateArchives() {
+
+                const search = searchInput.value.toLowerCase().trim();
+                const filter = filterSelect.value.toLowerCase();
+
+                let visible = 0;
+
+                document.querySelectorAll(".archive-card").forEach(card => {
+
+                    const name = card.dataset.name;
+                    const id = card.dataset.id;
+                    const classification = card.dataset.class;
+
+                    const matchesSearch =
+                        name.includes(search) ||
+                        id.includes(search) ||
+                        classification.includes(search);
+
+                    const matchesFilter = !filter || classification === filter;
+
+                    if (matchesSearch && matchesFilter) {
+                        card.style.display = "";
+                        visible++;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                countElement.textContent =
+                    `${visible} arquivo${visible !== 1 ? 's' : ''} encontrado${visible !== 1 ? 's' : ''}`;
+            }
+
+            searchInput.addEventListener("input", updateArchives);
+            filterSelect.addEventListener("change", updateArchives);
+
+        });
+    </script>
     @vite('resources/js/site.js')
     @vite('resources/js/noir-bg.js')
 

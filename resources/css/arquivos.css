@@ -315,3 +315,42 @@ body.setis-active #setis-alert {
     margin-top: 0.5rem;
     font-style: italic;
 }
+
+.archive-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.archive-search,
+.archive-filter {
+    min-width: 280px;
+    padding: 12px 16px;
+
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(157,108,255,.35);
+
+    color: white;
+    border-radius: 10px;
+
+    backdrop-filter: blur(10px);
+
+    transition: .25s;
+}
+
+.archive-search:focus,
+.archive-filter:focus {
+    outline: none;
+    border-color: #9d6cff;
+    box-shadow: 0 0 20px rgba(157,108,255,.35);
+}
+
+.archive-count {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #b89cff;
+    font-size: .95rem;
+    letter-spacing: 1px;
+}
