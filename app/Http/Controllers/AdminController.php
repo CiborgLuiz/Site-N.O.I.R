@@ -477,10 +477,8 @@ class AdminController extends Controller
 
         return $url;
     }
-}
 
-public function storeTerminalCommand(Request $request)
-{
+public function storeTerminalCommand(Request $request){
     $this->requireAdmin($request);
 
     $data = $request->validate([
@@ -519,4 +517,5 @@ public function destroyTerminalCommand(
     return back()
         ->with('admin_tab', 'terminal')
         ->with('status', 'Comando removido.');
+}
 }
