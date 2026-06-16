@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    
+
     <!-- Básico -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +51,7 @@
 
         a:hover {
             color: #c3a6ff;
-            text-shadow: 0 0 8px rgba(157,108,255,.6);
+            text-shadow: 0 0 8px rgba(157, 108, 255, .6);
         }
 
         a:active {
@@ -60,14 +61,14 @@
         a.special-link {
             display: inline-block;
             padding: 6px 12px;
-            border: 1px solid rgba(157,108,255,.3);
+            border: 1px solid rgba(157, 108, 255, .3);
             border-radius: 8px;
             backdrop-filter: blur(10px);
             transition: all .25s ease;
         }
 
         a.special-link:hover {
-            background: rgba(157,108,255,.15);
+            background: rgba(157, 108, 255, .15);
             border-color: #9d6cff;
             transform: translateY(-2px);
         }
@@ -76,11 +77,9 @@
     <title>N.O.I.R - Painel Admin</title>
     @vite('resources/css/admin.css')
 </head>
-<body
-    class="admin-page noir-loading"
-    data-upload-max-kb="{{ config('filesystems.upload_max_kb', 3072) }}"
-    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');"
->
+
+<body class="admin-page noir-loading" data-upload-max-kb="{{ config('filesystems.upload_max_kb', 3072) }}"
+    style="--noir-logo-image: url('{{ asset('images/logo.png') }}');">
     @include('partials.site-loader')
 
     <canvas id="noir-bg"></canvas>
@@ -101,7 +100,7 @@
         @php
             $activeTab = session('admin_tab', 'archives');
 
-            if ($activeTab === 'keys' && ! $admin->isOwner()) {
+            if ($activeTab === 'keys' && !$admin->isOwner()) {
                 $activeTab = 'archives';
             }
         @endphp
@@ -147,11 +146,13 @@
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Inserir arquivo de entidade</h2>
-                        <p class="admin-muted">Cria um registro em `Archive` e envia a imagem para o storage de uploads.</p>
+                        <p class="admin-muted">Cria um registro em `Archive` e envia a imagem para o storage de uploads.
+                        </p>
                     </div>
                 </div>
 
-                <form method="POST" action="{{ route('admin.archives.store') }}" enctype="multipart/form-data" class="admin-form">
+                <form method="POST" action="{{ route('admin.archives.store') }}" enctype="multipart/form-data"
+                    class="admin-form">
                     @csrf
 
                     <label>
@@ -178,7 +179,8 @@
                     <label>
                         Imagem da entidade
                         <input type="url" name="image_url" placeholder="https://link-da-imagem.png" required>
-                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite
+                            {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <label class="admin-wide">
@@ -207,7 +209,8 @@
                                 <small>{{ $archive->image_label }}</small>
                             </div>
 
-                            <form method="POST" action="{{ route('admin.archives.destroy', $archive) }}" data-confirm-delete="Remover esta entidade e a imagem dela?" data-async-delete>
+                            <form method="POST" action="{{ route('admin.archives.destroy', $archive) }}"
+                                data-confirm-delete="Remover esta entidade e a imagem dela?" data-async-delete>
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="admin-danger-button">Remover</button>
@@ -250,7 +253,8 @@
                 <div class="admin-panel-heading">
                     <div>
                         <h2>Pastas do sistema</h2>
-                        <p class="admin-muted">Remover uma pasta apaga seus arquivos do banco e os uploads vinculados.</p>
+                        <p class="admin-muted">Remover uma pasta apaga seus arquivos do banco e os uploads vinculados.
+                        </p>
                     </div>
                 </div>
 
@@ -262,7 +266,8 @@
                                 <span>{{ $folder->files->count() }} arquivos</span>
                             </div>
 
-                            <form method="POST" action="{{ route('admin.folders.destroy', $folder) }}" data-confirm-delete="Remover esta pasta e todos os arquivos dela?">
+                            <form method="POST" action="{{ route('admin.folders.destroy', $folder) }}"
+                                data-confirm-delete="Remover esta pasta e todos os arquivos dela?">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="admin-danger-button">Remover</button>
@@ -284,7 +289,8 @@
                     </div>
                 </div>
 
-                <form method="POST" action="{{ route('admin.files.store') }}" enctype="multipart/form-data" class="admin-form admin-file-form">
+                <form method="POST" action="{{ route('admin.files.store') }}" enctype="multipart/form-data"
+                    class="admin-form admin-file-form">
                     @csrf
 
                     <label>
@@ -307,7 +313,8 @@
                         Tipo
                         <select name="type" id="admin-file-type" required>
                             @foreach ($fileTypes as $type)
-                                <option value="{{ $type }}" @selected(old('type', 'txt') === $type)>{{ strtoupper($type) }}</option>
+                                <option value="{{ $type }}" @selected(old('type', 'txt') === $type)>
+                                    {{ strtoupper($type) }}</option>
                             @endforeach
                         </select>
                     </label>
@@ -315,19 +322,22 @@
                     <label class="admin-wide admin-file-field" data-file-field="txt mp4">
                         Conteúdo
                         <textarea name="content" rows="6">{{ old('content') }}</textarea>
-                        <span class="admin-hint">TXT salva texto. MP4 aceita embed do YouTube ou link normal do YouTube.</span>
+                        <span class="admin-hint">TXT salva texto. MP4 aceita embed do YouTube ou link normal do
+                            YouTube.</span>
                     </label>
 
                     <label class="admin-file-field" data-file-field="png">
                         Imagem do sistema
                         <input type="url" name="system_image" placeholder="https://link-da-imagem.png">
-                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite
+                            {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <label class="admin-file-field" data-file-field="mp3">
                         Audio do sistema
                         <input type="url" name="system_audio" placeholder="https://link-do-audio.mp3">
-                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
+                        <span class="admin-hint">Storage: {{ config('filesystems.uploads_disk') }} // limite
+                            {{ round(config('filesystems.upload_max_kb', 3072) / 1024, 1) }} MB</span>
                     </label>
 
                     <button type="submit" class="admin-button" @disabled($folders->isEmpty())>Inserir arquivo</button>
@@ -354,7 +364,8 @@
                                         <small>{{ $file->path_label ?: \Illuminate\Support\Str::limit($file->content, 90) }}</small>
                                     </div>
 
-                                    <form method="POST" action="{{ route('admin.files.destroy', $file) }}" data-confirm-delete="Remover este arquivo da pasta?" data-async-delete>
+                                    <form method="POST" action="{{ route('admin.files.destroy', $file) }}"
+                                        data-confirm-delete="Remover este arquivo da pasta?" data-async-delete>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="admin-danger-button">Remover</button>
@@ -377,7 +388,8 @@
                     <div class="admin-panel-heading">
                         <div>
                             <h2>Gerar chave de admin</h2>
-                            <p class="admin-muted">A chave aparece uma vez, define o cargo ADMIN e expira no primeiro cadastro.</p>
+                            <p class="admin-muted">A chave aparece uma vez, define o cargo ADMIN e expira no primeiro
+                                cadastro.</p>
                         </div>
                     </div>
 
@@ -424,8 +436,9 @@
                                     {{ $account->active ? 'ATIVO' : 'DESABILITADO' }}
                                 </span>
 
-                                @if (! $account->isOwner() && $account->id !== $admin->id)
-                                    <form method="POST" action="{{ $account->active ? route('admin.accounts.disable', $account) : route('admin.accounts.enable', $account) }}">
+                                @if (!$account->isOwner() && $account->id !== $admin->id)
+                                    <form method="POST"
+                                        action="{{ $account->active ? route('admin.accounts.disable', $account) : route('admin.accounts.enable', $account) }}">
                                         @csrf
                                         <button type="submit">
                                             {{ $account->active ? 'Desabilitar' : 'Reativar' }}
@@ -459,6 +472,70 @@
                 </article>
             </section>
         @endif
+        <section class="admin-tab-panel" data-admin-tab-panel="terminal">
+            <article class="admin-panel">
+
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Comandos do Terminal</h2>
+                        <p class="admin-muted">
+                            Crie comandos personalizados para o terminal N.O.I.R.
+                        </p>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ route('admin.terminal.store') }}" class="admin-form">
+                    @csrf
+
+                    <label>
+                        Comando
+                        <input type="text" name="command" required>
+                    </label>
+
+                    <label class="admin-wide">
+                        Resposta
+                        <textarea name="response" rows="8" required></textarea>
+                    </label>
+
+                    <button type="submit" class="admin-button">
+                        Criar comando
+                    </button>
+                </form>
+
+            </article>
+
+            <article class="admin-panel">
+
+                <h2>Comandos existentes</h2>
+
+                <div class="admin-folder-list">
+
+                    @foreach (\App\Models\TerminalCommand::all() as $command)
+                        <div class="admin-list-row admin-list-row-actions">
+
+                            <div>
+                                <strong>{{ $command->command }}</strong>
+                                <small>
+                                    {{ \Illuminate\Support\Str::limit($command->response, 100) }}
+                                </small>
+                            </div>
+
+                            <form method="POST" action="{{ route('admin.terminal.destroy', $command) }}">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="admin-danger-button">
+                                    Remover
+                                </button>
+                            </form>
+
+                        </div>
+                    @endforeach
+
+                </div>
+
+            </article>
+        </section>
     </main>
 
     <script>
@@ -511,7 +588,7 @@
             function showAdminNotice(message, isError = false) {
                 const liveRegion = document.querySelector('[data-admin-live]');
 
-                if (! liveRegion) {
+                if (!liveRegion) {
                     return;
                 }
 
@@ -524,13 +601,13 @@
             }
 
             function updateEmptyState(list) {
-                if (! list || ! list.dataset.emptyMessage) {
+                if (!list || !list.dataset.emptyMessage) {
                     return;
                 }
 
                 const hasRows = list.querySelector('.admin-list-row, .admin-folder-block');
 
-                if (! hasRows) {
+                if (!hasRows) {
                     const empty = document.createElement('p');
                     empty.className = 'admin-muted';
                     empty.textContent = list.dataset.emptyMessage;
@@ -563,7 +640,7 @@
                         },
                     });
 
-                    if (! response.ok) {
+                    if (!response.ok) {
                         throw new Error('delete-failed');
                     }
 
@@ -601,16 +678,16 @@
 
             document.querySelectorAll('[data-confirm-delete]').forEach((form) => {
                 form.addEventListener('submit', (event) => {
-                    if (! window.confirm(form.dataset.confirmDelete)) {
+                    if (!window.confirm(form.dataset.confirmDelete)) {
                         event.preventDefault();
                         return;
                     }
 
-                    if (! window.fetch || ! window.FormData) {
+                    if (!window.fetch || !window.FormData) {
                         return;
                     }
 
-                    if (! form.hasAttribute('data-async-delete')) {
+                    if (!form.hasAttribute('data-async-delete')) {
                         return;
                     }
 
@@ -624,12 +701,14 @@
                     const maxKb = Number(input.dataset.maxUploadKb || maxUploadKb);
                     const file = input.files && input.files[0];
 
-                    if (! file || file.size <= maxKb * 1024) {
+                    if (!file || file.size <= maxKb * 1024) {
                         return;
                     }
 
                     input.value = '';
-                    showAdminNotice(`Arquivo acima do limite de ${(maxKb / 1024).toFixed(1)} MB para deploy no Vercel.`, true);
+                    showAdminNotice(
+                        `Arquivo acima do limite de ${(maxKb / 1024).toFixed(1)} MB para deploy no Vercel.`,
+                        true);
                 });
             });
 
@@ -645,4 +724,5 @@
     @vite('resources/js/site.js')
     @vite('resources/js/noir-bg.js')
 </body>
+
 </html>

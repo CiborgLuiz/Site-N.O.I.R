@@ -7,6 +7,7 @@ use App\Http\Controllers\ArquivosController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Models\TerminalCommand;
 
 Route::get('/', function () {
     return view('home');
@@ -167,3 +168,20 @@ Route::get('/build/{path}', function ($path) {
     );
 
 })->where('path', '.*');
+
+Route::post(
+    '/terminal-command',
+    [AdminController::class, 'storeTerminalCommand']
+)->name('terminal.store');
+
+Route::delete(
+    '/terminal-command/{terminalCommand}',
+    [AdminController::class, 'destroyTerminalCommand']
+)->name('terminal.destroy');
+
+Route::get('/api/terminal-commands', function () {
+
+    return TerminalCommand::where('active', true)
+        ->get(['command', 'response']);
+
+});

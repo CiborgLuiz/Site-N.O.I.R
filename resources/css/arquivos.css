@@ -388,14 +388,3 @@ body.setis-active #setis-alert {
     margin-bottom: 2rem;
     text-transform: uppercase;
 }
-
-@media (max-width: 768px) {
-    .archive-controls {
-        flex-direction: column;
-    }
-    .archive-search,
-    .archive-filter {
-        width: 100%;
-        max-width: 100%;
-    }
-}

@@ -69,24 +69,31 @@
     const history = [];
     let historyIndex = -1;
 
-    const commands = {
+    fetch("/api/terminal-commands")
+        .then((response) => response.json())
+        .then((databaseCommands) => {
+
+            databaseCommands.forEach((command) => {
+
+                commands[command.command.toLowerCase()] = () => {
+
+                    return command.response
+                        .split("\n");
+
+                };
+
+            });
+
+        })
+        .catch(() => { });
+
+    let commands = {
         help: () => [
-            "Comandos disponiveis:",
-            "help, clear, protocolos, arquivos, login, historia, setis"
+            "Comandos disponíveis:",
+            "help, clear"
         ],
-        clear: () => "__CLEAR__",
-        protocolos: () => ["Acessando banco de dados de classificação..."],
-        arquivos: () => ["Abrindo arquivo de anomalias..."],
-        login: () => ["Autorização necessária"],
-        historia: () => [
-            "A N.O.I.R foi fundada em 1947",
-            "Seu objetivo: observar, interferir e arquivar anomalias além da compreensão.",
-            "A liberação é monitorada pela Direção Central."
-        ],
-        setis: () => {
-            triggerGlitch();
-            return ["Protocolo SETIS ativado. Integridade do sinal instável."];
-        }
+
+        clear: () => "__CLEAR__"
     };
 
     function renderBuffer() {

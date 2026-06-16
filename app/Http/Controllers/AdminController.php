@@ -7,6 +7,7 @@ use App\Models\AdminInviteKey;
 use App\Models\Archive;
 use App\Models\File as SystemFile;
 use App\Models\Folder;
+use App\Models\TerminalCommand;
 use App\Support\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -476,4 +477,46 @@ class AdminController extends Controller
 
         return $url;
     }
+}
+
+public function storeTerminalCommand(Request $request)
+{
+    $this->requireAdmin($request);
+
+    $data = $request->validate([
+        'command' => [
+            'required',
+            'string',
+            'max:100',
+            'unique:terminal_commands,command'
+        ],
+        'response' => [
+            'required',
+            'string',
+            'max:10000'
+        ],
+    ]);
+
+    TerminalCommand::create([
+        'command' => strtolower(trim($data['command'])),
+        'response' => $data['response'],
+        'active' => true,
+    ]);
+
+    return back()
+        ->with('admin_tab', 'terminal')
+        ->with('status', 'Comando criado.');
+}
+
+public function destroyTerminalCommand(
+    Request $request,
+    TerminalCommand $terminalCommand
+) {
+    $this->requireAdmin($request);
+
+    $terminalCommand->delete();
+
+    return back()
+        ->with('admin_tab', 'terminal')
+        ->with('status', 'Comando removido.');
 }
