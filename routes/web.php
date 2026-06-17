@@ -41,8 +41,6 @@ Route::get('/sistema/terminal', function () {
 
 Route::get('/sistema/pasta/{id}', [SystemController::class, 'openFolder']);
 
-
-
 Route::get('/internal/migrate', function () {
 
     $token = request()->query('token');
@@ -76,8 +74,6 @@ Route::get('/internal/migrate', function () {
 
 });
 
-
-
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('index');
@@ -110,6 +106,29 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::delete('/sistema-arquivos/{file}', [AdminController::class, 'destroyFile'])->name('files.destroy');
 
+    /*
+    |--------------------------------------------------------------------------
+    | TERMINAL COMMANDS
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post(
+        '/terminal-command',
+        [AdminController::class, 'storeTerminalCommand']
+    )->name('terminal.store');
+
+    Route::delete(
+        '/terminal-command/{terminalCommand}',
+        [AdminController::class, 'destroyTerminalCommand']
+    )->name('terminal.destroy');
+
+});
+
+Route::get('/api/terminal-commands', function () {
+
+    return TerminalCommand::where('active', true)
+        ->get(['command', 'response']);
+
 });
 
 Route::get('/images/{path}', function ($path) {
@@ -123,7 +142,6 @@ Route::get('/images/{path}', function ($path) {
     return response()->file($file);
 
 })->where('path', '.*');
-
 
 Route::get('/sounds/{path}', function ($path) {
 
@@ -145,14 +163,14 @@ Route::get('/build/{path}', function ($path) {
 
     $mimeTypes = [
         'css' => 'text/css',
-        'js'  => 'application/javascript',
-        'json'=> 'application/json',
+        'js' => 'application/javascript',
+        'json' => 'application/json',
         'png' => 'image/png',
         'jpg' => 'image/jpeg',
-        'jpeg'=> 'image/jpeg',
+        'jpeg' => 'image/jpeg',
         'svg' => 'image/svg+xml',
-        'woff'=> 'font/woff',
-        'woff2'=> 'font/woff2',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
     ];
 
     return response(
@@ -168,20 +186,3 @@ Route::get('/build/{path}', function ($path) {
     );
 
 })->where('path', '.*');
-
-Route::post(
-    '/terminal-command',
-    [AdminController::class, 'storeTerminalCommand']
-)->name('terminal.store');
-
-Route::delete(
-    '/terminal-command/{terminalCommand}',
-    [AdminController::class, 'destroyTerminalCommand']
-)->name('terminal.destroy');
-
-Route::get('/api/terminal-commands', function () {
-
-    return TerminalCommand::where('active', true)
-        ->get(['command', 'response']);
-
-});
