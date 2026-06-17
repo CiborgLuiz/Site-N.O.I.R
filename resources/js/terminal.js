@@ -69,6 +69,15 @@
     const history = [];
     let historyIndex = -1;
 
+    let commands = {
+        help: () => [
+            "Comandos disponíveis:",
+            "help, clear"
+        ],
+
+        clear: () => "__CLEAR__"
+    };
+
     fetch("/api/terminal-commands")
         .then((response) => response.json())
         .then((databaseCommands) => {
@@ -86,15 +95,6 @@
 
         })
         .catch(() => { });
-
-    let commands = {
-        help: () => [
-            "Comandos disponíveis:",
-            "help, clear"
-        ],
-
-        clear: () => "__CLEAR__"
-    };
 
     function renderBuffer() {
         inputText.textContent = buffer;

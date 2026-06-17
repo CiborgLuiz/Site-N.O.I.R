@@ -135,6 +135,7 @@
             <button type="button" data-admin-tab-target="archives">Inserir entidade</button>
             <button type="button" data-admin-tab-target="folders">Criar pasta</button>
             <button type="button" data-admin-tab-target="files">Inserir arquivo em pasta</button>
+            <button type="button" data-admin-tab-target="terminal">Comandos do Terminal</button>
 
             @if ($admin->isOwner())
                 <button type="button" data-admin-tab-target="keys">Gerar chave de admin</button>
