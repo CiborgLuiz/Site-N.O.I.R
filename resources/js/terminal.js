@@ -82,19 +82,33 @@
         .then((response) => response.json())
         .then((databaseCommands) => {
 
+            console.log("Comandos recebidos do banco:");
+            console.table(databaseCommands);
+
             databaseCommands.forEach((command) => {
 
+                if (!command.command || !command.response) {
+                    console.warn("Comando inválido:", command);
+                    return;
+                }
+
                 commands[command.command.toLowerCase()] = () => {
-
-                    return command.response
-                        .split("\n");
-
+                    return String(command.response).split("\n");
                 };
 
+                console.log(
+                    "Comando carregado:",
+                    command.command
+                );
             });
 
+            console.log("Objeto final de comandos:");
+            console.log(commands);
+
         })
-        .catch(() => { });
+        .catch((error) => {
+            console.error("Erro ao carregar comandos:", error);
+        });
 
     function renderBuffer() {
         inputText.textContent = buffer;
