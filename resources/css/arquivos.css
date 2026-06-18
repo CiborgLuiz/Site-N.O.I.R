@@ -323,10 +323,10 @@ body.setis-active #setis-alert {
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 2.5rem;
-    background: linear-gradient(135deg, rgba(157, 108, 255, 0.05) 0%, rgba(157, 108, 255, 0.02) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 108, 0.05) 0%, rgba(255, 231, 108, 0.02) 100%);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 1px solid rgba(157, 108, 255, 0.15);
+    border: 1px solid rgba(255, 238, 108, 0.15);
     backdrop-filter: blur(10px);
 }
 
@@ -336,7 +336,7 @@ body.setis-active #setis-alert {
     min-width: 280px;
     padding: 12px 16px;
     background: rgba(10, 10, 10, 0.6);
-    border: 1px solid rgba(157, 108, 255, 0.3);
+    border: 1px solid rgba(255, 255, 108, 0.3);
     border-radius: 8px;
     color: var(--text-main);
     font-size: 0.95rem;
@@ -350,17 +350,17 @@ body.setis-active #setis-alert {
 }
 
 .archive-search:hover {
-    border-color: rgba(157, 108, 255, 0.6);
+    border-color: rgba(255, 238, 108, 0.6);
     background: rgba(10, 10, 10, 0.75);
 }
 
 .archive-search:focus {
     outline: none;
-    border-color: #9d6cff;
+    border-color: #fff86c;
     background: rgba(10, 10, 10, 0.85);
     box-shadow:
-        0 0 20px rgba(157, 108, 255, 0.3),
-        inset 0 0 15px rgba(157, 108, 255, 0.05);
+        0 0 20px rgba(253, 255, 108, 0.3),
+        inset 0 0 15px rgba(255, 231, 108, 0.05);
     transform: translateY(-1px);
 }
 
@@ -368,7 +368,7 @@ body.setis-active #setis-alert {
     min-width: 220px;
     padding: 12px 16px;
     background-color: rgba(10, 10, 10, 0.6);
-    border: 1px solid rgba(157, 108, 255, 0.3);
+    border: 1px solid rgba(255, 253, 108, 0.3);
     border-radius: 8px;
     color: var(--text-main);
     font-size: 0.9rem;
@@ -378,8 +378,8 @@ body.setis-active #setis-alert {
     -moz-appearance: none;
     padding-right: 36px;
     background-image:
-        linear-gradient(45deg, transparent 50%, #9d6cff 50%),
-        linear-gradient(135deg, #9d6cff 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, #fff06c 50%),
+        linear-gradient(135deg, #fff56c 50%, transparent 50%);
     background-position:
         calc(100% - 14px) calc(50% - 2px),
         calc(100% - 8px) calc(50% - 2px);
@@ -391,17 +391,17 @@ body.setis-active #setis-alert {
 }
 
 .archive-filter:hover {
-    border-color: rgba(157, 108, 255, 0.6);
+    border-color: rgba(255, 250, 108, 0.6);
     background-color: rgba(10, 10, 10, 0.75);
 }
 
 .archive-filter:focus {
     outline: none;
-    border-color: #9d6cff;
+    border-color: #ffdd6c;
     background-color: rgba(10, 10, 10, 0.85);
     box-shadow:
-        0 0 20px rgba(157, 108, 255, 0.3),
-        inset 0 0 15px rgba(157, 108, 255, 0.05);
+        0 0 20px rgba(255, 250, 108, 0.3),
+        inset 0 0 15px rgba(240, 255, 108, 0.05);
     transform: translateY(-1px);
 }
 
