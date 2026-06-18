@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BixOavdA.css",
+    "file": "assets/app-BK4EBBFQ.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -18,7 +18,7 @@
     ]
   },
   "resources/css/arquivos.css": {
-    "file": "assets/arquivos-wkD0MUqk.css",
+    "file": "assets/arquivos-Bb1_3z9k.css",
     "src": "resources/css/arquivos.css",
     "isEntry": true,
     "name": "arquivos",
@@ -81,7 +81,7 @@
     "isEntry": true
   },
   "resources/js/terminal.js": {
-    "file": "assets/terminal-CRivlMKP.js",
+    "file": "assets/terminal-Ceqakl_l.js",
     "name": "terminal",
     "src": "resources/js/terminal.js",
     "isEntry": true
