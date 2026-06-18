@@ -124,7 +124,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::get('/api/terminal-commands', function () {
+Route::get('/terminal-commands', function () {
 
     return TerminalCommand::where('active', true)
         ->get(['command', 'response']);

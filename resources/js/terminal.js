@@ -78,7 +78,7 @@
         clear: () => "__CLEAR__"
     };
 
-    fetch("/api/terminal-commands")
+    fetch("/terminal-commands")
         .then((response) => response.json())
         .then((databaseCommands) => {
 

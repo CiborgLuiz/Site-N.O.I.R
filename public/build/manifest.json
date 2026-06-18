@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BK4EBBFQ.css",
+    "file": "assets/app-BwkJ2ucF.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -81,7 +81,7 @@
     "isEntry": true
   },
   "resources/js/terminal.js": {
-    "file": "assets/terminal-Ceqakl_l.js",
+    "file": "assets/terminal-BfnLdL6c.js",
     "name": "terminal",
     "src": "resources/js/terminal.js",
     "isEntry": true
