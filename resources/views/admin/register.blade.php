@@ -134,6 +134,6 @@
     </main>
 
     @vite('resources/js/site.js')
-    @vite('resources/js/noir-bg.js')
+    
 </body>
 </html>

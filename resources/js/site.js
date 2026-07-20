@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupRevealTargets();
     setupInteractivePanels();
     setupHeroDrift();
+    setupScrollProgress();
+    setupGyroscopeParallax();
     setupEasterEggs();
 });
 
@@ -260,6 +262,83 @@ function setupHeroDrift() {
     hero.addEventListener('pointerleave', () => {
         hero.style.setProperty('--hero-shift-x', '0px');
         hero.style.setProperty('--hero-shift-y', '0px');
+    });
+}
+
+function setupScrollProgress() {
+    if (prefersReducedMotion) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'noir-scroll-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.prepend(bar);
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            bar.style.setProperty('--scroll-pct', pct + '%');
+            ticking = false;
+        });
+    }, { passive: true });
+}
+
+function setupGyroscopeParallax() {
+    if (prefersReducedMotion) return;
+    if (!window.DeviceOrientationEvent) return;
+
+    // ponytail: only on touch devices with gyroscope
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
+    if (!mq.matches) return;
+
+    const cards = document.querySelectorAll('.card, .status-box');
+    if (!cards.length) return;
+
+    let gamma = 0, beta = 0;
+    let rafId = null;
+
+    function onOrientation(e) {
+        gamma = (e.gamma || 0) / 45; // -1 to 1
+        beta = ((e.beta || 0) - 45) / 45; // center around 45°
+        beta = Math.max(-1, Math.min(1, beta));
+    }
+
+    function applyTilt() {
+        const rx = beta * -6;
+        const ry = gamma * 6;
+        cards.forEach((card) => {
+            card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        rafId = requestAnimationFrame(applyTilt);
+    }
+
+    // Request permission on iOS 13+
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        document.addEventListener('click', () => {
+            DeviceOrientationEvent.requestPermission().then((state) => {
+                if (state === 'granted') {
+                    window.addEventListener('deviceorientation', onOrientation);
+                    rafId = requestAnimationFrame(applyTilt);
+                }
+            }).catch(() => {});
+        }, { once: true });
+    } else {
+        window.addEventListener('deviceorientation', onOrientation);
+        rafId = requestAnimationFrame(applyTilt);
+    }
+
+    // Reset on leave viewport
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        } else if (!document.hidden && !rafId) {
+            rafId = requestAnimationFrame(applyTilt);
+        }
     });
 }
 

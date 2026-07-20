@@ -13,13 +13,24 @@ export default defineConfig({
                 'resources/css/arquivos.css',
                 'resources/css/terminal.css',
                 'resources/css/admin.css',
+                'resources/css/background.css',
                 'resources/js/app.js',
-                'resources/js/noir-bg.js',
+                'resources/js/noir-bg-lazy.js',
                 'resources/js/site.js',
                 'resources/js/terminal.js',
+                'resources/js/tesseract-widget.js',
             ],
             refresh: true,
         }),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    three: ['three'],
+                },
+            },
+        },
+    },
 });

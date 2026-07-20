@@ -1,6 +1,14 @@
 {
+  "_preload-helper-I4rgV-VL.js": {
+    "file": "assets/preload-helper-I4rgV-VL.js",
+    "name": "preload-helper"
+  },
+  "_three-C_TqQV4f.js": {
+    "file": "assets/three-C_TqQV4f.js",
+    "name": "three"
+  },
   "resources/css/admin.css": {
-    "file": "assets/admin-BWUNQQEd.css",
+    "file": "assets/admin-CY-te0Sf.css",
     "src": "resources/css/admin.css",
     "isEntry": true,
     "name": "admin",
@@ -9,7 +17,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BwkJ2ucF.css",
+    "file": "assets/app-BgkO3e8R.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -18,7 +26,7 @@
     ]
   },
   "resources/css/arquivos.css": {
-    "file": "assets/arquivos-a0h_GxSG.css",
+    "file": "assets/arquivos-DNsVUuFD.css",
     "src": "resources/css/arquivos.css",
     "isEntry": true,
     "name": "arquivos",
@@ -26,8 +34,17 @@
       "arquivos.css"
     ]
   },
+  "resources/css/background.css": {
+    "file": "assets/background-Bc77KP-T.css",
+    "src": "resources/css/background.css",
+    "isEntry": true,
+    "name": "background",
+    "names": [
+      "background.css"
+    ]
+  },
   "resources/css/home.css": {
-    "file": "assets/home-wfPZHyT2.css",
+    "file": "assets/home-BNs1lqhj.css",
     "src": "resources/css/home.css",
     "isEntry": true,
     "name": "home",
@@ -36,7 +53,7 @@
     ]
   },
   "resources/css/protocolos-effects.css": {
-    "file": "assets/protocolos-effects-B2qFSNBp.css",
+    "file": "assets/protocolos-effects-DD15gtuA.css",
     "src": "resources/css/protocolos-effects.css",
     "isEntry": true,
     "name": "protocolos-effects",
@@ -45,7 +62,7 @@
     ]
   },
   "resources/css/system.css": {
-    "file": "assets/system-0yH1MarM.css",
+    "file": "assets/system-DB8NpB2Y.css",
     "src": "resources/css/system.css",
     "isEntry": true,
     "name": "system",
@@ -54,7 +71,7 @@
     ]
   },
   "resources/css/terminal.css": {
-    "file": "assets/terminal-swJK5By9.css",
+    "file": "assets/terminal-DrMbZ7xj.css",
     "src": "resources/css/terminal.css",
     "isEntry": true,
     "name": "terminal",
@@ -63,27 +80,114 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-CKl8NZMC.js",
+    "file": "assets/app-D50PWgE6.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_preload-helper-I4rgV-VL.js"
+    ],
+    "dynamicImports": [
+      "resources/js/site.js",
+      "resources/js/system-app.js",
+      "resources/js/system-desktop.js",
+      "resources/js/terminal-engine.js",
+      "resources/js/entities-engine.js",
+      "resources/js/protocols-engine.js",
+      "resources/js/files-engine.js",
+      "resources/js/scroll-narrative.js",
+      "resources/js/page-transitions.js"
+    ]
   },
-  "resources/js/noir-bg.js": {
-    "file": "assets/noir-bg-BCx_780G.js",
-    "name": "noir-bg",
-    "src": "resources/js/noir-bg.js",
-    "isEntry": true
+  "resources/js/entities-engine.js": {
+    "file": "assets/entities-engine-B7oWj3Lj.js",
+    "name": "entities-engine",
+    "src": "resources/js/entities-engine.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/files-engine.js": {
+    "file": "assets/files-engine-Do5sxG-R.js",
+    "name": "files-engine",
+    "src": "resources/js/files-engine.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/noir-background.js": {
+    "file": "assets/noir-background-C6zEU3C6.js",
+    "name": "noir-background",
+    "src": "resources/js/noir-background.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_three-C_TqQV4f.js"
+    ]
+  },
+  "resources/js/noir-bg-lazy.js": {
+    "file": "assets/noir-bg-lazy-Dre5fG3F.js",
+    "name": "noir-bg-lazy",
+    "src": "resources/js/noir-bg-lazy.js",
+    "isEntry": true,
+    "imports": [
+      "_preload-helper-I4rgV-VL.js"
+    ],
+    "dynamicImports": [
+      "resources/js/noir-background.js"
+    ]
+  },
+  "resources/js/page-transitions.js": {
+    "file": "assets/page-transitions-B7oWj3Lj.js",
+    "name": "page-transitions",
+    "src": "resources/js/page-transitions.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/protocols-engine.js": {
+    "file": "assets/protocols-engine-_unawUxo.js",
+    "name": "protocols-engine",
+    "src": "resources/js/protocols-engine.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/scroll-narrative.js": {
+    "file": "assets/scroll-narrative-B7oWj3Lj.js",
+    "name": "scroll-narrative",
+    "src": "resources/js/scroll-narrative.js",
+    "isDynamicEntry": true
   },
   "resources/js/site.js": {
-    "file": "assets/site-B5WxfvmZ.js",
+    "file": "assets/site-pLZAjh3G.js",
     "name": "site",
     "src": "resources/js/site.js",
-    "isEntry": true
+    "isEntry": true,
+    "isDynamicEntry": true
+  },
+  "resources/js/system-app.js": {
+    "file": "assets/system-app-Ck8FpYnt.js",
+    "name": "system-app",
+    "src": "resources/js/system-app.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/system-desktop.js": {
+    "file": "assets/system-desktop-CGPXhBTS.js",
+    "name": "system-desktop",
+    "src": "resources/js/system-desktop.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/terminal-engine.js": {
+    "file": "assets/terminal-engine-FTin4rp_.js",
+    "name": "terminal-engine",
+    "src": "resources/js/terminal-engine.js",
+    "isDynamicEntry": true
   },
   "resources/js/terminal.js": {
-    "file": "assets/terminal-BfnLdL6c.js",
+    "file": "assets/terminal-BlSkU3bL.js",
     "name": "terminal",
     "src": "resources/js/terminal.js",
     "isEntry": true
+  },
+  "resources/js/tesseract-widget.js": {
+    "file": "assets/tesseract-widget-B-PtiVKX.js",
+    "name": "tesseract-widget",
+    "src": "resources/js/tesseract-widget.js",
+    "isEntry": true,
+    "imports": [
+      "_three-C_TqQV4f.js"
+    ]
   }
 }

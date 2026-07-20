@@ -117,7 +117,7 @@ body {
 .section {
     max-width: 1200px;
     margin: auto;
-    padding: 6rem 2rem;
+    padding: clamp(3rem, 5vw, 6rem) clamp(1rem, 4vw, 2rem);
 }
 
 .section-dark {
@@ -261,29 +261,6 @@ body {
     transform: scale(1.03);
 }
 
-@keyframes setisPulse {
-    from {
-        box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
-    }
-    to {
-        box-shadow: 0 0 40px rgba(231, 76, 60, 0.8);
-    }
-}
-
-.class-setis h3 {
-    position: relative;
-    animation: glitchText 1.5s infinite;
-}
-
-@keyframes glitchText {
-    0% { transform: translate(0); }
-    20% { transform: translate(-1px, 1px); }
-    40% { transform: translate(1px, -1px); }
-    60% { transform: translate(-1px, -1px); }
-    80% { transform: translate(1px, 1px); }
-    100% { transform: translate(0); }
-}
-
 body.setis-active {
     background-color: #120000;
     animation: screenShake 0.3s infinite;
@@ -335,6 +312,34 @@ body.setis-active .logo {
     60% { transform: translate(-1px, -1px); }
     80% { transform: translate(1px, 1px); }
     100% { transform: translate(0); }
+}
+
+@media (max-width: 640px) {
+    .hero {
+        height: auto;
+        min-height: 100svh;
+        padding: clamp(5rem, 15vw, 8rem) clamp(1rem, 4vw, 1.5rem) clamp(2rem, 5vw, 4rem);
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .section-warning {
+        padding-inline: clamp(1rem, 4vw, 2rem);
+    }
+
+    #setis-alert {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        font-size: 11px;
+    }
 }
 
 #setis-alert {

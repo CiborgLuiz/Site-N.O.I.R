@@ -1,0 +1,1 @@
+function r(){const t=document.querySelector(".system-apps-grid");t&&t.addEventListener("click",e=>{e.target.closest(".system-app-card")&&navigator.vibrate&&navigator.vibrate(10)},{passive:!0})}const s={init:r};export{s as default};

@@ -130,3 +130,22 @@ body.denus-active .card:hover {
     box-shadow: 0 0 20px rgba(230,126,34,0.6);
     transform: scale(1.02);
 }
+
+@media (max-width: 640px) {
+    .class-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .class-grid .card {
+        padding: 1.25rem;
+    }
+
+    .class-grid .card h3 {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .class-grid .card p {
+        font-size: 0.82rem;
+    }
+}
